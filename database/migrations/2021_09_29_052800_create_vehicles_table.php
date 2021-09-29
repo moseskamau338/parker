@@ -17,7 +17,7 @@ class CreateVehiclesTable extends Migration
             $table->id();
             $table->foreignId('customer_id');
             $table->string('name');
-            $table->string('plate_no');
+            $table->string('plate_no')->unique();
             $table->timestamps();
         });
     }

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Requests\LoginRequest;
+use App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -42,6 +44,24 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        //custom
+        Fortify::authenticateUsing(function (LoginRequest $request) {
+            //authenticate with both email/username
+            $user = User::where('email', $request->username)
+                ->orWhere('username', $request->username)->first();
+
+            if (
+                $user &&
+                \Hash::check($request->password, $user->password)
+            ) {
+                if ($request->has('sitename')) {
+                    $token = $user->createToken('android-client');
+                    $user['token'] = $token->plainTextToken;
+                }
+                return $user;
+            }
         });
     }
 }

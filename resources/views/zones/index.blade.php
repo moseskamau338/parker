@@ -45,25 +45,8 @@
     </x-slot>
     
     <main class="py-12 h-screen">
-        <!-- This example requires Tailwind CSS v2.0+ -->
-        <div class="text-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-        </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No zones</h3>
-        <p class="mt-1 text-sm text-gray-500">
-            Get started by creating a new zone.
-        </p>
-        <div class="mt-6">
-            <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <!-- Heroicon name: solid/plus -->
-            <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-            </svg>
-            New Zone
-            </button>
-        </div>
-        </div>
+       @livewire('zone.zones') 
+       {{-- ['user' => $user], key($user->id) --}}
 
     </main>
 

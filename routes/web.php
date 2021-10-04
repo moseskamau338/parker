@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ZoneController;
+use App\Http\Livewire\Users;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +25,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/sales','SaleController@index')->name('sales');
-    Route::get('/zones','ZoneController@index')->name('zones');
+    Route::get('/sales',[SaleController::class,'index'])->name('sales');
+    Route::get('/zones',[ZoneController::class,'index'])->name('zones');
+    Route::get('/users', Users::class)->name('users');
 });

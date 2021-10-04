@@ -21,7 +21,7 @@
                     <x-jet-nav-link href="{{ route('zones') }}" :active="request()->routeIs('zones')">
                         {{ __('Zones') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="#" :active="request()->routeIs('users')">
+                    <x-jet-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                         {{ __('Users') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="#" :active="request()->routeIs('reports')">

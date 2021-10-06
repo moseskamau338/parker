@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use HasFactory;
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

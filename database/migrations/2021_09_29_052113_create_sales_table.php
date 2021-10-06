@@ -16,7 +16,8 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id');
-            $table->foreignId('vevicle_id');
+            $table->foreignId('user_id');
+            $table->foreignId('vehicle_id');
             $table->foreignId('rate_id');
             $table->foreignId('zone_id');
             $table->foreignId('gateway_id')->nullable();

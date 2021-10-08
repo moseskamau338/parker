@@ -80,7 +80,7 @@ class SaleController extends Controller
         ]);
         //get total = time(hrs) * rate
         
-        $totals = Carbon::parse($sale->entry_time)->diffInDays(Carbon::now()) * $sale->rate->amount;
+        $totals = round(((Carbon::parse($sale->entry_time)->diffInMinutes(Carbon::now())) / 60) * $sale->rate->amount);
         
         
         $sale->gateway_id = $request->gateway_id;

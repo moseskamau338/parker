@@ -18,7 +18,7 @@ class CreateShiftsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('zone_id');
             $table->timestamp('start')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('end')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('end')->nullable();
             $table->timestamps();
         });
     }

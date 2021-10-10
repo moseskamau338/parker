@@ -38,6 +38,10 @@ class Sale extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
     public function gateway()
     {
         return $this->belongsTo(Gateway::class);

@@ -1,44 +1,38 @@
  <!-- This example requires Tailwind CSS v2.0+ -->
  @if (count($zones) > 0)
- <div class="px-64">
-     <h2 class="ml-16 text-3xl font-bold text-gray-500">Zones ({{count($zones)}}):</h2>
-     <!-- This example requires Tailwind CSS v2.0+ -->
-     <!-- This example requires Tailwind CSS v2.0+ -->
-     <div class="bg-white shadow-sm p-4 rounded mt-6 max-w-lg ml-16">
-         <div class="flow-root mt-2 px-5">
-             <ul role="list" class="-my-5 divide-y divide-gray-200">
-                @foreach ($zones as $zone)
-                    <li class="py-4">
-                        <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+ <div class="pb-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-2">
+     <h2 class="text-3xl font-bold text-gray-500">Zones ({{count($zones)}}):</h2>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+        <div>
+        <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach ($zones as $zone)
+                <li class="col-span-1 flex shadow-sm rounded-md">
+                    <div class="flex-shrink-0 flex items-center justify-center w-16 bg-blue-600 text-white text-sm font-medium rounded-l-md">
+                        Zone
+                    </div>
+                    <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                        <div class="flex-1 px-4 py-2 text-sm truncate">
+                        <a href="#" class="text-gray-900 font-medium hover:text-gray-600">{{\Str::of($zone->name)->upper()}}</a>
+                        <p class="text-gray-500">{{count($zone->sales)}}</p>
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">
-                            {{\Str::of($zone->name)->upper()}}
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                            @leonardkrasner
-                            </p>
+                        <div class="flex-shrink-0 pr-2">
+                        <button type="button" class="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <span class="sr-only">Open options</span>
+                            <!-- Heroicon name: solid/dots-vertical -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                        </button>
                         </div>
-                        <div>
-                            <a href="#" class="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
-                            View
-                            </a>
-                        </div>
-                        </div>
-                    </li>
-                @endforeach
+                    </div>
+                </li>
+            @endforeach
 
-            </ul>
+        </ul>
         </div>
-        <div class="mt-6">
-            <a href="#" class="w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-            View all
-            </a>
-        </div>
-        </div>
-
+    </div>
+ </div>
  </div>
 
  @else

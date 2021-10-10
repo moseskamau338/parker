@@ -11,7 +11,7 @@ class Zones extends Component
 
     public function mount()
     {
-        $this->zones = Zone::all(['id','name']);
+        $this->zones = Zone::with('sales')->get(['id','name']);
     }
 
     public function render()

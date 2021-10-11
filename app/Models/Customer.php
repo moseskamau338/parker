@@ -13,8 +13,8 @@ class Customer extends Model
     {
         return $this->hasMany(Sale::class);
     }
-    // public function zone()
-    // {
-    //     return $this->belongsTo(Zone::class);
-    // }
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }

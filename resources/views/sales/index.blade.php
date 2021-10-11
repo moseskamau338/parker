@@ -77,20 +77,32 @@
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
                             Customer
                         </th>
+                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
+                            Customer Type
+                        </th>
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
                             Vehicle
                         </th>
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Zone
+                            Site
+                        </th>
+                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
+                            Shift
                         </th>
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
                             Rate
                         </th>
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Duration
+                            Duration (Mins)
                         </th>
                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Totals
+                            Payment Method
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
+                            Amount
+                        </th>
+                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
+                            Transaction Ref.
                         </th>
                         <th scope="col" class="relative px-6 py-3">
                             <span class="sr-only">Edit</span>
@@ -98,7 +110,83 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sales as $sale)
+                        <tr class="bg-white">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                Moses Kamau
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Customer 1
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Short Term
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                KDC143X
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Jacaranda
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                GHT-34834723
+                            </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    200/hr
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                124 mins
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                MPESA
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{number_format(124/60*200,2)}} /=
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                PGREH43572368
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            </td>
+                        </tr>
+                             <tr class="bg-white">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                Moses Kamau
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Customer 2
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Short Term
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                KAC123W
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                Jacaranda
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                GHT-34834723
+                            </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    200/hr
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                124 mins
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                CASH
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{number_format(74/60*200,2)}} /=
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                PGHS23672368
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            </td>
+                        </tr>
+                        {{-- @foreach ($sales as $sale)
                             <tr class="bg-white">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {{\Str::of($sale->user->name)->title()}}
@@ -125,7 +213,7 @@
                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
 
                     </tbody>
                     </table>

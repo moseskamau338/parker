@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ZoneController;
@@ -27,5 +28,9 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     })->name('dashboard');
     Route::get('/sales',[SaleController::class,'index'])->name('sales');
     Route::get('/zones',[ZoneController::class,'index'])->name('zones');
+    Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.show');
     Route::get('/users', Users::class)->name('users');
+
+    //reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 });

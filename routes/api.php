@@ -34,6 +34,9 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     // Route::post('shifts', [ShiftController::class,'store']);
     Route::resource('shifts', ShiftController::class);
     Route::post('shifts/close/{shift}', [ShiftController::class, 'closeShift']);
+
+    //logout
+    Route::patch('logout', [ApiAuthController::class, 'logout']);
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

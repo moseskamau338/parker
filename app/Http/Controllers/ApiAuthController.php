@@ -32,8 +32,13 @@ class ApiAuthController extends Controller
             Hash::check($request->password, $user->password)
         ) {
             $user['token'] = $user->createToken($request->sitename)->plainTextToken;
-            return $user;
+            return $user->with('roles','permissions');
         }
 
+   }
+   public function logout(Request $request)
+   {
+      $request->user()->tokens()->delete();
+      return response()->json(['message' => 'Logout successful. Tokens disabled']);
    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\ZoneController;
 use Orion\Facades\Orion;
+use App\Http\Controllers\Api\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     Orion::resource('users', UserController::class);
     //customers
     Orion::resource('customers', CustomerController::class);
+    Route::post('enroll/customer/{customer}', [SubscriptionController::class, 'subscribe']);
+    Route::post('unsubscribe/customer/{customer}', [SubscriptionController::class, 'unSubscribe']);
 
     //zones
     Route::resource('zones', ZoneController::class );

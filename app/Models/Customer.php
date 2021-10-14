@@ -19,9 +19,9 @@ class Customer extends Model
         return $this->belongsTo(Zone::class);
     }
 
-    public function subscriptions()
+    public function subscription()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasOne(Subscription::class);
     }
 
     //helper
@@ -61,4 +61,19 @@ class Customer extends Model
                 ->addDays($subscription->plan->cycle), false);
 
     }
+
+    public function subscribe($plan): bool
+    {
+        $this->type = 'LTC';
+        $this->save();
+
+        $subscription = new Subscription();
+        $subscription->customer_id = $this->id;
+        $subscription->plan_id = $plan;
+        $subscription->started = now();
+        $subscription->status = 1;
+
+        return $subscription->save();
+    }
+
 }

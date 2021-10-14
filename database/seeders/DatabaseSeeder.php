@@ -25,14 +25,13 @@ class DatabaseSeeder extends Seeder
         Customer::truncate();
         Rate::truncate();
         Gateway::truncate();
-        
+
         User::factory(5)->create();
         Customer::factory(10)->create();
 
         //default gateways : constant
         Gateway::create(['name'=>'MPESA']);
         Gateway::create(['name'=>'CASH']);
-        Gateway::create(['name'=>'BANK']);
 
         Rate::factory(5)->create();
 
@@ -55,19 +54,20 @@ class DatabaseSeeder extends Seeder
         foreach ($roles as $role) {
             Role::create(['name'=>$role]);
         }
-        
+
         //roles and functions
         $permissions = ['browse', 'edit','export', 'add','delete'];
         $module_names = ['sales', 'zones', 'users', 'customers','shifts','handovers','gateways','receipts','vehicles','permissions'];
         //permissions
         $manager_permissions = [[1,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1], [1,1,1,1,1],[1,0,1,1,0],[1,0,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,0,0,0,0]];
         $partner_permissions = [[1,0,1,1,0],[1,1,1,1,1],[1,0,1,0,0], [1,1,1,1,1],[1,0,1,1,0],[1,0,1,1,0],[1,1,1,1,1],[1,0,1,1,0],[1,1,1,1,1],[0,0,0,0,0]];
-        $cashier_permissions = [[1,0,1,1,0],[0,0,0,0,0],[0,0,0,0,0], [1,1,1,1,0],[1,0,1,1,0],[1,0,1,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0]];
+        $cashier_permissions = [[1,1,1,1,0],[0,0,0,0,0],[0,0,0,0,0], [1,1,1,1,0],[1,0,1,1,0],[1,0,1,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,
+            1,1],[0,0,0,0,0]];
         $admin_permissions = [[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]];
 
         //add for both API and web
-        for ($j=0; $j <= count($module_names)-1; $j++) { 
-            for ($i=0; $i <= count($permissions)-1; $i++) { 
+        for ($j=0; $j <= count($module_names)-1; $j++) {
+            for ($i=0; $i <= count($permissions)-1; $i++) {
                 // create permissions
                 $name = $permissions[$i].'-'.$module_names[$j];
                 $permission = Permission::create(['name' => $name]);

@@ -19,7 +19,9 @@ class ApiAuthController extends Controller
 
         //authenticate with both email/username
         $user = User::where('email', $request->username)
-            ->orWhere('username', $request->username)->first();
+            ->orWhere('username', $request->username)
+            ->with('roles','permissions')
+            ->first();
 
          if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
@@ -32,7 +34,7 @@ class ApiAuthController extends Controller
             Hash::check($request->password, $user->password)
         ) {
             $user['token'] = $user->createToken($request->sitename)->plainTextToken;
-            return $user->with('roles','permissions');
+            return $user;
         }
 
    }

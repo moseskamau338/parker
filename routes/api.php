@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ApiAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Api\ZoneController;
 use Orion\Facades\Orion;
 
 /*
@@ -26,6 +27,8 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     //customers
     Orion::resource('customers', CustomerController::class);
 
+    //zones
+    Route::resource('zones', ZoneController::class );
     //sales:
     Route::resource('sales', SaleController::class);
     Route::post('sales/{sale}/close', [SaleController::class, 'closeSale']);

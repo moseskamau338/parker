@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,5 +46,20 @@ class Sale extends Model
     public function gateway()
     {
         return $this->belongsTo(Gateway::class);
+    }
+    public function subscription(){
+        return $this->belongsTo(Subscription::class);
+    }
+    //sale
+    public function duration()
+    {
+        //calculates the time between entry and leave
+        //if no leave time, use now
+        if (!$this->leave_time){
+            return Carbon::now()->diffInSeconds(Carbon::now(), false);
+        }else{
+            return Carbon::parse($this->leave_time)->diffInSeconds(Carbon::parse($this->entry_time));
+        }
+
     }
 }

@@ -17,4 +17,10 @@ class Customer extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+
+    //helper
+    public function hasActiveSubscription()
+    {
+        //check if in list of active subscriptions
+    }
 }

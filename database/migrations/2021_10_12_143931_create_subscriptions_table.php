@@ -17,7 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->foreignId('customer_id');
             $table->foreignId('plan_id');
-            $table->foreignId('sale_id');
+            $table->foreignId('sale_id')->nullable();
             $table->timestamp('started');
             $table->boolean('status');
             $table->timestamps();

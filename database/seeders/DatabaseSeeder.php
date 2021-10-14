@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Gateway;
+use App\Models\Plan;
 use \App\Models\User;
 use \App\Models\Customer;
 use \App\Models\Rate;
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
         \DB::table('model_has_permissions')->truncate();
         Role::truncate();
         Permission::truncate();
+        Plan::truncate();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // create roles:
@@ -54,6 +56,13 @@ class DatabaseSeeder extends Seeder
         foreach ($roles as $role) {
             Role::create(['name'=>$role]);
         }
+
+        //standard plan
+        $p = new Plan();
+        $p->name = 'monthly';
+        $p->cycle = 30; //days
+        $p->rate = 2000;
+        $p->save();
 
         //roles and functions
         $permissions = ['browse', 'edit','export', 'add','delete'];

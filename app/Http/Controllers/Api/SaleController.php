@@ -94,20 +94,7 @@ class SaleController extends Controller
             'gateway_id' => 'required|exists:App\Models\Gateway,id',
         ]);
 
-        //if LTC, record time, check subscription calculate cost & close transaction
-        // if short term, calculate cost & close transaction
-        if ($sale->customer->type === 'LTC'){
-            //check active plan
-            /*if active plan
-                - check expiry
-                - if expiry is in future, return paid = true, cost = 0, plan status, and days remaining
-            - close sale
-            */
-        }else{
-            //calculate cost
-            // record payment
-            //close sale
-        }
+
 
         //get total = time(hrs) * rate
         $totals = round(((Carbon::parse($sale->entry_time)->diffInMinutes(Carbon::now())) / 60) * $sale->rate->amount);
@@ -117,8 +104,52 @@ class SaleController extends Controller
             abort(422, 'Sorry, this transaction was already closed!');
         }
 
+           //if LTC, record time, check subscription calculate cost & close transaction
+        // if short term, calculate cost & close transaction
+        if ($sale->customer->type === 'LTC'){
 
-        $sale->gateway_id = $request->gateway_id;
+            //check active plan
+            if($sale->customer->hasActiveSubscription()){
+                dd('Customer has active', $sale->customer->hasActiveSubscription());
+                /*if active plan
+                    - check expiry
+                    - if expiry is in future, return paid = true, cost = 0, plan status, and days remaining
+                - close sale
+                */
+                $remaining = $sale->customer->subscriptionDays($sale->customer->hasActiveSubscription());
+                if($remaining < 0){
+                    //expired
+                     $final_sale = $this->directPay($request, $sale,$totals);
+                    return response()->json($final_sale,200);
+                }else{
+                    $final_sale = $this->directPay($request, $sale,0);
+                    return response()->json($final_sale->toArray()+[
+                        'paid'=>true,
+                        'cost'=>0,
+                        'plan_status'=> 'Active',
+                        'days_remaining' => $remaining
+                    ],200);
+                }
+            }else{
+                //close sale
+                $final_sale = $this->directPay($request, $sale,$totals);
+                return response()->json($final_sale,200);
+            }
+        }else{
+             dd('Customer has no active', $sale->customer->hasActiveSubscription());
+            //close sale
+            $final_sale = $this->directPay($request, $sale,$totals);
+            return response()->json($final_sale,200);
+        }
+
+
+
+
+    }
+
+    public function directPay(Request $request, Sale $sale, $totals)
+    {
+        $sale->gateway_id = $request->gateway_id ?? null;
         $sale->leave_time = now();
         $sale->totals = $totals;
         $sale->status = 'PAID';
@@ -126,8 +157,8 @@ class SaleController extends Controller
 
         $sale->save();
 
+        return $sale;
 
-        return response()->json($sale,200);
     }
 
 

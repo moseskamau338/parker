@@ -76,6 +76,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Zone::class);
     }
+    public function sales_handovers()
+    {
+        return $this->hasMany(SalesHandover::class, 'from');
+    }
 
     //helpers
     public function startShift()

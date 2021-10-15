@@ -15,11 +15,14 @@ class CreateSalesHandoversTable extends Migration
     {
         Schema::create('sales_handovers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shift_id');
             $table->foreignId('to');
             $table->foreignId('from');
             $table->double('cash_at_hand');
             $table->double('cash_at_bank');
             $table->double('amount_transferred');
+            $table->boolean('approved')->nullable();
+            $table->foreignId('approved_by')->nullable();
             $table->timestamps();
         });
     }

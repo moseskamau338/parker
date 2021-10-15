@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SaleResource;
 use App\Models\Sale;
+use App\Models\SalesHandover;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,9 +27,9 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getHandovers(Request $request)
     {
-        //
+        return $request->user()->sales_handovers;
     }
 
     /**
@@ -110,7 +111,7 @@ class SaleController extends Controller
 
             //check active plan
             if($sale->customer->hasActiveSubscription()){
-                dd('Customer has active', $sale->customer->hasActiveSubscription());
+//                dd('Customer has active', $sale->customer->hasActiveSubscription());
                 /*if active plan
                     - check expiry
                     - if expiry is in future, return paid = true, cost = 0, plan status, and days remaining
@@ -163,15 +164,31 @@ class SaleController extends Controller
 
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function createHandover(Request $request)
     {
-        //
+        //validate
+        $request->validate([
+            'handover_to' => 'required|numeric|exists:users,id',//user id
+           'amount_transferred' => 'required|numeric',
+           'cash_at_hand' => 'required|numeric',
+           'cash_at_bank' => 'required|numeric',
+        ]);
+        //shift id
+        $shift = $request->user()->currentShift();
+        if(!$shift){
+            abort(404, 'Sorry, we couldn\'t find a shift attached to this request!');
+        }
+
+        //create new unapproved salehandover
+        $handover = SalesHandover::create([
+            'shift_id' => $shift->id,
+            'to'=>$request->handover_to,
+            'from'=>$request->user()->id,
+            'amount_transferred'=>$request->amount_transferred,
+            'cash_at_hand'=>$request->cash_at_hand,
+            'cash_at_bank'=>$request->cash_at_bank,
+        ]);
+        return response()->json(['status'=>true, 'message'=>'Handover created successfully','details'=>$handover]);
     }
 
     /**

@@ -21,6 +21,8 @@ class CreateHandoversTable extends Migration
             $table->double('total_sales');
             $table->integer('completed_sales_count');
             $table->integer('incomplete_sales_count');
+            $table->boolean('approved')->nullable();
+            $table->foreignId('approved_by')->nullable(); // user
             $table->timestamps();
         });
     }

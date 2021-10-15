@@ -33,6 +33,10 @@ class ApiAuthController extends Controller
             $user &&
             Hash::check($request->password, $user->password)
         ) {
+            //if cashier... start shift
+            $shift = $user->startShift();
+            $user->shift = $shift;
+            //login and send back user
             $user['token'] = $user->createToken($request->sitename)->plainTextToken;
             return $user;
         }
@@ -40,7 +44,15 @@ class ApiAuthController extends Controller
    }
    public function logout(Request $request)
    {
+       //is cashier?
+       if($request->user()->hasRole('cashier')){
+           // is shift closed?
+           if($request->user()->currentShift()){
+                // redirect back with must close shift
+               abort(403, 'Sorry, you cannot logout before you close your shift!');
+           }
+       }
       $request->user()->tokens()->delete();
-      return response()->json(['message' => 'Logout successful. Tokens disabled']);
+      return response()->json(['message' => 'Logout successful.']);
    }
 }

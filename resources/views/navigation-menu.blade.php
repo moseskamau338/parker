@@ -51,13 +51,13 @@
                                 {{ __('Manage Shifts') }}
                             </div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}" class="flex">
+                            <x-jet-dropdown-link href="{{ route('shifts.handovers') }}" class="flex">
                                 <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                                 </svg>
                                 {{ __('Shift Handovers') }}
                             </x-jet-dropdown-link>
-                             <x-jet-dropdown-link href="{{ route('profile.show') }}" class="flex">
+                             <x-jet-dropdown-link href="{{ route('sales.handovers') }}" class="flex">
                                  <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>

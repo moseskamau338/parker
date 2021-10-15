@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Livewire\Users;
+use \App\Http\Controllers\ShiftController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.show');
     Route::get('/users', Users::class)->name('users');
 
+    //handovers
+    Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');
+    Route::get('shifts/handovers', [ShiftController::class, 'handovers'])->name('shifts.handovers');
     //reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 });

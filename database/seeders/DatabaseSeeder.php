@@ -8,6 +8,7 @@ use \App\Models\User;
 use \App\Models\Customer;
 use \App\Models\Rate;
 
+use App\Models\Zone;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -25,19 +26,22 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         Customer::truncate();
         Rate::truncate();
+        Zone::truncate();
         Gateway::truncate();
 
-        User::factory(5)->create();
+        User::factory(10)->create();
         Customer::factory(10)->create();
 
         //default gateways : constant
         Gateway::create(['name'=>'MPESA']);
         Gateway::create(['name'=>'CASH']);
 
-        Rate::factory(5)->create();
+//        Rate::factory(5)->create();
 
         //permissions
         $this->permissionsSeeder();
+
+        $this->assignPermissions();
 
     }
     protected function permissionsSeeder()
@@ -105,8 +109,12 @@ class DatabaseSeeder extends Seeder
             }
         }
     }
-    public function createPermission($i,$j)
+    public function assignPermissions()
     {
-        # code...
+        foreach (User::all()->except(1,2) as $user){
+            $user->assignRole('cashier');
+        }
+        User::find(1)->assignRole('admin');
+        User::find(2)->assignRole('manager');
     }
 }

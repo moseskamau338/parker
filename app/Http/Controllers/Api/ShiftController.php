@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ShiftController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -68,9 +68,9 @@ class ShiftController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function closeShift(Request $request, Shift $shift)
+    public function closeShift(Request $request)
     {
         // dd($request->all());
         // require all cash at hand
@@ -79,21 +79,25 @@ class ShiftController extends Controller
             'cash_at_hand' => 'required|numeric',
             'cash_at_bank' => 'required|numeric',
         ]);
-        
+
+        $shift = $request->user()->currentShift();
+        if (!$shift){
+            abort(404, 'No shift open for this user.');
+        }
+
         // if handover exists for this shift, cancel
         if($shift->handover){
-            return abort(422,'Sorry, this shift was already closed!');
+            abort(422,'Sorry, this shift was already closed!');
         }
         //shift close
         $shift->end = null;
         $shift->save();
 
-
         $handover = new Handover();
         $handover->shift_id = $shift->id;
          $handover->cash_at_hand = $request->cash_at_hand;
          $handover->cash_at_bank = $request->cash_at_bank;
-         
+
         // calculate totals from good sales
         // dd(Carbon::parse($shift->start)->diffInMinutes(Carbon::now()));
         $shift_start = date('Y-m-d H:i:s', strtotime($shift->start));
@@ -127,12 +131,13 @@ class ShiftController extends Controller
         ->where('status', 'PENDING')->orWhere('status', 'CANCELED')->count();
 
         $shift->end = Carbon::now();
-       
+
         try {
             $handover->save();
             $shift->save();
+            return response()->json(['message'=>'Shift closed successfully','handover_details'=>$handover]);
         } catch (\Throwable $e) {
-            return response()->json(['message'=>'Error closing shift'.$e->getMessage()], 200);
+            return response()->json(['message'=>'Error closing shift'.$e->getMessage()], 500);
         }
     }
 

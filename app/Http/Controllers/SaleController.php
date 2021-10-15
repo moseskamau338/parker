@@ -16,4 +16,9 @@ class SaleController extends Controller
             //massage
         return view('sales.index', compact('sales'));
     }
+
+    public function handovers(Request $request)
+    {
+        return view('sales.handovers');
+    }
 }

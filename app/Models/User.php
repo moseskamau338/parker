@@ -71,4 +71,43 @@ class User extends Authenticatable
     {
         return $this->hasMany(Shift::class);
     }
+
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
+
+    //helpers
+    public function startShift()
+    {
+        if($this->currentShift()){
+//               redirect back with must close shift
+           abort(403, 'Sorry, you cannot start a new shift until the previous is ended!');
+       }
+        $shift = null;
+        if ($this->hasRole('cashier')){
+            $shift = Shift::create([
+                'user_id'=>$this->id,
+                'zone_id'=>$this->zone->id,
+                'start'=>now(),
+            ]);
+        }
+        return $shift;
+    }
+    public function currentShift()
+    {
+        //this shifts opened latest
+        $current_shifts = Shift::where('user_id',  $this->id)
+            ->whereDate('start','<=', now())
+            ->where('end', null)
+//            ->whereDate('end', null)
+            ->latest()->get();
+
+
+        if(count($current_shifts) > 0){
+            return $current_shifts[0];
+        }else{
+            return null;
+        }
+    }
 }

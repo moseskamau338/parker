@@ -29,7 +29,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     })->name('dashboard');
     Route::get('/sales',[SaleController::class,'index'])->name('sales');
     Route::get('/zones',[ZoneController::class,'index'])->name('zones');
-    Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.show');
+    Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.web.show');
     Route::get('/users', Users::class)->name('users');
 
     //handovers

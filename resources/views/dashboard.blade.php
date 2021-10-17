@@ -135,7 +135,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('sales')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                          View sales history
@@ -163,7 +163,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('shifts.handovers')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                         Shifts & Handovers
@@ -191,7 +191,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('users')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                             Manage System Users
@@ -219,7 +219,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('receipts')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                             Reciepts & Bank movements

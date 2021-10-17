@@ -4,7 +4,6 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ZoneController;
-use App\Http\Livewire\Users;
 use \App\Http\Controllers\ShiftController;
 use \App\Http\Controllers\ReceiptController;
 
@@ -31,7 +30,9 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     Route::get('/sales',[SaleController::class,'index'])->name('sales');
     Route::get('/zones',[ZoneController::class,'index'])->name('zones');
     Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.web.show');
-    Route::get('/users', Users::class)->name('users');
+
+    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
+    Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
 
     //handovers
     Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');

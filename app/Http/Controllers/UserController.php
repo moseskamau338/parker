@@ -9,6 +9,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        # code...
+        return view('users.index');
+    }
+
+    public function create()
+    {
+         return view('users.create');
     }
 }

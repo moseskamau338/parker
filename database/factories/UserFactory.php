@@ -29,6 +29,8 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $this->faker->unique()->phoneNumber(),
+            'nat_id' => $this->faker->unique()->randomNumber,
             'zone_id' => Rate::factory(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

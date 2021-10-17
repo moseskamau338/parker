@@ -6,6 +6,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Livewire\Users;
 use \App\Http\Controllers\ShiftController;
+use \App\Http\Controllers\ReceiptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');
     Route::get('shifts/handovers', [ShiftController::class, 'handovers'])->name('shifts.handovers');
     //reports
+    Route::get('manage/receipts', [ReceiptController::class, 'index'])->name('receipts');
+    Route::post('manage/receipts', [ReceiptController::class, 'store'])->name('receipts.store');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 });

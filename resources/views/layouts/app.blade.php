@@ -51,6 +51,57 @@
 
             <!-- Page Content -->
             <main>
+                {{--notifications:--}}
+                 @if (session()->has('notification'))
+                     @php
+                     $notification = session('notification');
+                    @endphp
+                    <div x-data="{open: true }" class="rounded-md {{'bg-'.$notification->color.'-100'}} px-4 py-3 shadow-md absolute
+                    right-2" x-bind:class="open?'':'hidden'"
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-90"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-300"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-90"
+                    >
+                      <div class="flex">
+                        <div class="flex-shrink-0">
+                          <!-- Heroicon name: solid/check-circle -->
+                          <svg class="h-5 w-5 {{'text-'.$notification->color.'-400'}}" xmlns="http://www.w3.org/2000/svg"
+                               viewBox="0 0 20 20" fill="currentColor"
+                               aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <div class="ml-3">
+                          <p class="text-sm font-medium {{'text-'.$notification->color
+                          .'-800'}}">
+                              {{$notification->message}}
+                          </p>
+                        </div>
+                        <div class="ml-auto pl-3">
+                          <div class="-mx-1.5 -my-1.5">
+                            <button type="button" class="inline-flex {{'bg-'.$notification->color.'-100'}} rounded-md p-1.5  {{'text-'
+                            .$notification->color.'-500'}}
+                                {{'hover:bg-'.$notification->color.'-200'}}
+                            focus:outline-none focus:ring-2 focus:ring-offset-2
+                            {{'hover:bg-'.$notification->color.'-200'}}
+                                {{'focus:ring-offset-'.$notification->color.'-100'}}
+                                {{'focus:ring-'.$notification->color.'-600'}}"
+                                    @click="open = false">
+                              <span class="sr-only">Dismiss</span>
+                              <!-- Heroicon name: solid/x -->
+                              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                @endif
+
                 {{ $slot }}
             </main>
         </div>

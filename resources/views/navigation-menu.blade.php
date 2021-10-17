@@ -24,6 +24,11 @@
                     <x-jet-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                         {{ __('Users') }}
                     </x-jet-nav-link>
+                    @if(auth()->user()->hasRole(['admin','manager']))
+                    <x-jet-nav-link href="{{ route('receipts') }}" :active="request()->routeIs('receipts')">
+                        {{ __('Receipts') }}
+                    </x-jet-nav-link>
+                    @endif
                     <x-jet-nav-link href="{{ route('reports') }}" :active="request()->routeIs('reports')">
                         {{ __('Reports') }}
                     </x-jet-nav-link>

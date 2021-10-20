@@ -45,4 +45,9 @@ class UserController extends Controller
          return redirect('/users');
 
     }
+
+    public function roles()
+    {
+        return view('users.roles');
+    }
 }

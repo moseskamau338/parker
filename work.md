@@ -30,3 +30,11 @@ for ($j=0; $j <= count($module_names)-1; $j++) {
 	}
 }
 ```
+
+##Hosting: 
+- Clear cache
+- Build assets
+- Migrate DB with configurations
+- Transfer normal Laravel folder structure [Please use in base dir, for subdir, change .htaccess appropriately]
+- Edit inxed file pointers
+- Check mix tags for assets

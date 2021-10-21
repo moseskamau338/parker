@@ -1,3 +1,6 @@
+# Tasks
+- Create tables for the various modules and reports
+
 # Algorithms
 <!-- Adding permisions -->
 ```php

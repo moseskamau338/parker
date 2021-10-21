@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SaleResource;
 use App\Models\Sale;
+use App\Models\SalesHandover;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -25,9 +27,9 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getHandovers(Request $request)
     {
-        //
+        return $request->user()->sales_handovers;
     }
 
     /**
@@ -42,17 +44,32 @@ class SaleController extends Controller
         //validate:
         $request->validate([
             'customer_id' => 'required|exists:App\Models\Customer,id',
-            'vehicle_id' => 'required|exists:App\Models\Vehicle,id',
+            'vehicle_id' => 'exists:App\Models\Vehicle,id',
+            'vehicle' => 'string',
             'rate_id' => 'required|exists:App\Models\Rate,id',
             'zone_id' => 'required|exists:App\Models\Zone,id',
             'gateway_id' => 'exists:App\Models\Gateway,id',
             'payed_at' => 'date_format:Y-m-d H:i:s',
         ]);
-        
+
+        //check vihicle
+        $vehicle = null;
+        if(!$request->vehicle_id){
+            if ($request->vehicle){
+               $vehicle = Vehicle::firstOrCreate([
+                   'plate_no'=>$request->vehicle,
+                   'customer_id' => $request->customer_id
+               ]);
+            }else{
+                abort(422, 'Vehicle ID or name is required');
+            }
+        }
+
+
         $sale = Sale::create([
             'customer_id'=> $request->customer_id,
             'user_id' => auth()->id(),
-            'vehicle_id'=> $request->vehicle_id,
+            'vehicle_id'=> $vehicle !== null? $vehicle->id: $request->vehicle_id,
             'rate_id'=> $request->rate_id,
             'zone_id'=> $request->zone_id,
             'gateway_id'=> $request->gateway_id,
@@ -71,19 +88,69 @@ class SaleController extends Controller
      */
     public function closeSale(Request $request, Sale $sale)
     {
-        $this->authorize('update', $sale, auth()->user());
+        $this->authorize('update', $sale, auth('sanctum')->user());
 
-        // dd($request->all());
         //validate:
         $request->validate([
             'gateway_id' => 'required|exists:App\Models\Gateway,id',
         ]);
+
+
+
         //get total = time(hrs) * rate
-        
         $totals = round(((Carbon::parse($sale->entry_time)->diffInMinutes(Carbon::now())) / 60) * $sale->rate->amount);
-        
-        
-        $sale->gateway_id = $request->gateway_id;
+
+        //if already closed, abort
+        if ($sale->status === 'PAID'){
+            abort(422, 'Sorry, this transaction was already closed!');
+        }
+
+           //if LTC, record time, check subscription calculate cost & close transaction
+        // if short term, calculate cost & close transaction
+        if ($sale->customer->type === 'LTC'){
+
+            //check active plan
+            if($sale->customer->hasActiveSubscription()){
+//                dd('Customer has active', $sale->customer->hasActiveSubscription());
+                /*if active plan
+                    - check expiry
+                    - if expiry is in future, return paid = true, cost = 0, plan status, and days remaining
+                - close sale
+                */
+                $remaining = $sale->customer->subscriptionDays($sale->customer->hasActiveSubscription());
+                if($remaining < 0){
+                    //expired
+                     $final_sale = $this->directPay($request, $sale,$totals);
+                    return response()->json($final_sale,200);
+                }else{
+                    $final_sale = $this->directPay($request, $sale,0);
+                    return response()->json($final_sale->toArray()+[
+                        'paid'=>true,
+                        'cost'=>0,
+                        'plan_status'=> 'Active',
+                        'days_remaining' => $remaining
+                    ],200);
+                }
+            }else{
+                //close sale
+                $final_sale = $this->directPay($request, $sale,$totals);
+                return response()->json($final_sale,200);
+            }
+        }else{
+             dd('Customer has no active', $sale->customer->hasActiveSubscription());
+            //close sale
+            $final_sale = $this->directPay($request, $sale,$totals);
+            return response()->json($final_sale,200);
+        }
+
+
+
+
+    }
+
+    public function directPay(Request $request, Sale $sale, $totals)
+    {
+        $sale->gateway_id = $request->gateway_id ?? null;
         $sale->leave_time = now();
         $sale->totals = $totals;
         $sale->status = 'PAID';
@@ -91,21 +158,37 @@ class SaleController extends Controller
 
         $sale->save();
 
+        return $sale;
 
-        return response()->json($sale,200);
     }
 
-    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function createHandover(Request $request)
     {
-        //
+        //validate
+        $request->validate([
+            'handover_to' => 'required|numeric|exists:users,id',//user id
+           'amount_transferred' => 'required|numeric',
+           'cash_at_hand' => 'required|numeric',
+           'cash_at_bank' => 'required|numeric',
+        ]);
+        //shift id
+        $shift = $request->user()->currentShift();
+        if(!$shift){
+            abort(404, 'Sorry, we couldn\'t find a shift attached to this request!');
+        }
+
+        //create new unapproved salehandover
+        $handover = SalesHandover::create([
+            'shift_id' => $shift->id,
+            'to'=>$request->handover_to,
+            'from'=>$request->user()->id,
+            'amount_transferred'=>$request->amount_transferred,
+            'cash_at_hand'=>$request->cash_at_hand,
+            'cash_at_bank'=>$request->cash_at_bank,
+        ]);
+        return response()->json(['status'=>true, 'message'=>'Handover created successfully','details'=>$handover]);
     }
 
     /**

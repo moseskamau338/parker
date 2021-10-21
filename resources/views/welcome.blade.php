@@ -48,7 +48,7 @@
           </div>
           <div class="hidden md:flex md:items-center md:space-x-6">
               @guest
-                  
+
                 <a href="{{route('login')}}" class="text-base font-medium text-white hover:text-gray-300">
                     Log in
                 </a>
@@ -56,6 +56,15 @@
                     <a href="{{route('dashboard')}}" class="text-base font-medium text-white hover:text-gray-300">
                         Dashboard
                     </a>
+                  <form method="POST" action="{{ route('logout') }}">
+                     @csrf
+                      <a href="{{ route('logout') }}" class="text-base font-medium text-white hover:text-gray-300"
+                        onclick="event.preventDefault();
+                        this.closest('form').submit();"
+                      >
+                        {{ __('Log Out') }}
+                    </a>
+                    </form>
                 @endguest
                 <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
                 Get Mobile App
@@ -104,7 +113,7 @@
               <a href="#" class="block text-center w-full py-3 px-4 rounded-md shadow bg-indigo-600 text-white font-medium hover:bg-indigo-700">Start free trial</a>
             </div>
             <div class="mt-6 px-5">
-              
+
                 @guest'
                 <p class="text-center text-base font-medium text-gray-500">Existing customer? <a href="{{route('login')}}" class="text-gray-900 hover:underline">Login</a></p>
                 @else

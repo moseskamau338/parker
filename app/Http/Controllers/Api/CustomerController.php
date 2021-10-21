@@ -14,5 +14,5 @@ class CustomerController extends Controller
      */
     protected $model = Customer::class;
     // protected $request = CustomerRequest::class;
-    
+
 }

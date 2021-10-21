@@ -13,6 +13,9 @@ class UserRequest extends Request
             'name' => ['string|max:255'],
             'email' => ['email|unique:users'],
             'username' => ['string|max:255|min:3|unique:users'],
+            'phone' => ['unique:users'],
+            'nat_id' => ['numeric|unique:users'],
+            'password' => ['password']
         ];
     }
 
@@ -23,7 +26,9 @@ class UserRequest extends Request
              'name' => ['required'],
             'username' => ['required'],
             'email' => ['required'],
-            'password' => ['required']
+            'password' => ['required'],
+            'phone' => ['required'],
+            'nat_id' => ['required'],
         ];
     }
 }

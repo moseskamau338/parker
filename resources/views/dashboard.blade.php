@@ -37,7 +37,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-2">
             <!-- This example requires Tailwind CSS v2.0+ -->
             <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Last 30 days
+                Overview
             </h3>
             <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
                 <div class="px-4 py-5 sm:p-6">
@@ -135,7 +135,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('sales')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                          View sales history
@@ -163,7 +163,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('shifts.handovers')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                         Shifts & Handovers
@@ -191,7 +191,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('users')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                             Manage System Users
@@ -219,7 +219,7 @@
                     </div>
                     <div class="mt-8">
                     <h3 class="text-lg font-medium">
-                        <a href="#" class="focus:outline-none">
+                        <a href="{{route('receipts')}}" class="focus:outline-none">
                         <!-- Extend touch target to entire panel -->
                         <span class="absolute inset-0" aria-hidden="true"></span>
                             Reciepts & Bank movements

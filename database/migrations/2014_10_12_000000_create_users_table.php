@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->foreignId('zone_id');
+            $table->string('phone')->unique();
+            $table->string('nat_id')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

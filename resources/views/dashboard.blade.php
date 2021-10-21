@@ -37,7 +37,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-2">
             <!-- This example requires Tailwind CSS v2.0+ -->
             <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Last 30 days
+                Overview
             </h3>
             <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
                 <div class="px-4 py-5 sm:p-6">

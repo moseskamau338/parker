@@ -37,6 +37,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
 
     //Manage roles
     Route::get('/users/roles', [\App\Http\Controllers\UserController::class, 'roles'])->name('roles');
+    Route::post('/update/roles', [\App\Http\Controllers\UserController::class, 'updateRoles'])->name('update.roles');
 
     //handovers
     Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');

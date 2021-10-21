@@ -50,4 +50,10 @@ class UserController extends Controller
     {
         return view('users.roles');
     }
+
+    public function updateRoles(Request $request)
+    {
+        dd($request->all());
+
+    }
 }

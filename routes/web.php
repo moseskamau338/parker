@@ -42,6 +42,11 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     //handovers
     Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');
     Route::get('shifts/handovers', [ShiftController::class, 'handovers'])->name('shifts.handovers');
+
+    //shifts
+    Route::get('shifts', [ShiftController::class, 'shifts'])->name('shifts.view');
+
+
     //reports
     Route::get('manage/receipts', [ReceiptController::class, 'index'])->name('receipts');
     Route::post('manage/receipts', [ReceiptController::class, 'store'])->name('receipts.store');

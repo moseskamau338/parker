@@ -24,9 +24,7 @@ Route::get('/', function () {
 
 
 Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|partner']], function(){
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [ReportController::class, 'dashboard'])->name('dashboard');
     Route::get('/sales',[SaleController::class,'index'])->name('sales');
     Route::get('/zones',[ZoneController::class,'index'])->name('zones');
     Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.web.show');

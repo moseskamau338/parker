@@ -46,9 +46,9 @@
                 </dt>
                 <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                    71,897
+                        {{$stats->customers->count}}
                     <span class="ml-2 text-sm font-medium text-gray-500">
-                        from 70,946
+                        from {{$stats->customers->prev}}
                     </span>
                     </div>
 
@@ -60,7 +60,7 @@
                     <span class="sr-only">
                         Increased by
                     </span>
-                    12%
+                        {{$stats->customers->percentage}}%
                     </div>
                 </dd>
                 </div>

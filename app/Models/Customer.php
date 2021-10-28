@@ -28,7 +28,7 @@ class Customer extends Model
     public function hasActiveSubscription()
     {
         //check if in list of active subscriptions
-        if (count($this->subscriptions) > 0){
+        if ($this->subscriptions !== null && count($this->subscriptions) > 0){
             $active_subscriptions = [];
             foreach ($this->subscriptions
                          ->where('status', 1)

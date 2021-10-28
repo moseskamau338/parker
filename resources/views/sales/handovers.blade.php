@@ -11,7 +11,9 @@
                     Record Bank Receipts
                 </a>
             </div>
-            @livewire('sales-handover-table')
+            <div style="overflow-x: auto">
+                @livewire('sales-handover-table')
+            </div>
         </div>
     </div>
 </x-app-layout>

@@ -33,6 +33,7 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.0.1/b-html5-2.0.1/b-print-2.0.1/date-1.1.1/r-2.2.9/rg-1.1.3/sc-2.0.5/sb-1.2.2/sp-1.4.0/datatables.min.js"></script>
 
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @stack('scripts')
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

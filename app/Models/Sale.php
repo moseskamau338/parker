@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Sale extends Model
 {
@@ -23,31 +24,36 @@ class Sale extends Model
         'payed_at' => 'date_format:Y-m-d H:i:s',
     ];
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function rate()
+    public function rate(): BelongsTo
     {
         return $this->belongsTo(Rate::class);
     }
-    public function zone()
+    public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class);
     }
-    public function vehicle()
+    public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }
-    public function gateway()
+    public function shift(): BelongsTo
+    {
+        return $this->belongsTo(Shift::class);
+    }
+    public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class);
     }
-    public function subscription(){
+    public function subscription(): BelongsTo
+    {
         return $this->belongsTo(Subscription::class);
     }
     //sale

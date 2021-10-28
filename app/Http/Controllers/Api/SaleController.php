@@ -73,7 +73,7 @@ class SaleController extends Controller
             'rate_id'=> $request->rate_id,
             'zone_id'=> $request->zone_id,
             'gateway_id'=> $request->gateway_id,
-            'entry_time' => $request->entry_time,
+            'entry_time' => now(),
             'qr' => $request->qr,
         ]);
 
@@ -137,7 +137,7 @@ class SaleController extends Controller
                 return response()->json($final_sale,200);
             }
         }else{
-             dd('Customer has no active', $sale->customer->hasActiveSubscription());
+            //dd('Customer has no active', $sale->customer->hasActiveSubscription());
             //close sale
             $final_sale = $this->directPay($request, $sale,$totals);
             return response()->json($final_sale,200);

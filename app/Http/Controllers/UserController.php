@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -32,7 +33,7 @@ class UserController extends Controller
               "zone_id" => $request->zone,
               "phone" => $request->phone,
               "nat_id" => $request->nat_id,
-              "password" => $request->password,
+              "password" => Hash::make($request->password),
               ]);
 
          //assign roles

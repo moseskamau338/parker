@@ -26,8 +26,10 @@ Route::get('/', function () {
 Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|partner']], function(){
     Route::get('/dashboard', [ReportController::class, 'dashboard'])->name('dashboard');
     Route::get('/sales',[SaleController::class,'index'])->name('sales');
+
     Route::get('/zones',[ZoneController::class,'index'])->name('zones');
     Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.web.show');
+    Route::post('/create/zone',[ZoneController::class,'store'])->name('zones.web.store');
 
     Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
     Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');

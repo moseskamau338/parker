@@ -26,7 +26,6 @@ class SalesHandoverTable extends DataTableComponent
             Column::make('Approved', 'approved')
                 ->sortable()->searchable()
             ->hideIf(! auth()->user()->hasRole(['admin','manager'])),
-            Column::make('Approved By', 'approved_by')->hideIf(! auth()->user()->hasRole(['admin','manager'])),
             Column::make('Actions')
             ->hideIf(! auth()->user()->hasRole(['admin','manager'])),
         ];

@@ -1,5 +1,16 @@
 # Tasks
-- Create tables for the various modules and reports
+- ~~Hash user passwords~~
+- ~~sales~~
+~~- Sales handover table - approval/disapproval~~
+- Shift handover (table)
+- CRUD Zone
+  - Patner 
+  - Rate
+- Patner data per zone
+- Reports (with filters):
+  - Banking
+  - Sales
+
 
 # Algorithms
 <!-- Adding permisions -->

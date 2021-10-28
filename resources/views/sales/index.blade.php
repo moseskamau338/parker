@@ -43,10 +43,10 @@
 
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-2">
-        @if (count($sales) <= 0)    
+        @if (\App\Models\Sale::count() <= 0)
             <div clss="flex">
                 <div class="h-32 w-32 bg-gray-300 rounded-full flex m-auto ring-4 ring-blue-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-[6rem] w-[6rem] text-gray-400 justify-center m-auto items-center" viewBox="0 0 20 20" fill="currentColor">
@@ -63,168 +63,7 @@
             </div>
         @else
         <h3 class="ml-6 text-2xl"> Sales </h3>
-           <!-- This example requires Tailwind CSS v2.0+ -->
-            <div class="flex flex-col">
-            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Agent
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Customer
-                        </th>
-                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Customer Type
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Vehicle
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Site
-                        </th>
-                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Shift
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Rate
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Duration (Mins)
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Payment Method
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Amount
-                        </th>
-                         <th scope="col" class="px-6 py-3 text-left font-extrabold text-xs text-gray-500 uppercase tracking-wider">
-                            Transaction Ref.
-                        </th>
-                        <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">Edit</span>
-                        </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-white">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                Moses Kamau
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Customer 1
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Short Term
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                KDC143X
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Jacaranda
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                GHT-34834723
-                            </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    200/hr
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                124 mins
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                MPESA
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{number_format(124/60*200,2)}} /=
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                PGREH43572368
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                             <tr class="bg-white">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                Moses Kamau
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Customer 2
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Short Term
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                KAC123W
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Jacaranda
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                GHT-34834723
-                            </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    200/hr
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                124 mins
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                CASH
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{number_format(74/60*200,2)}} /=
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                PGHS23672368
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        {{-- @foreach ($sales as $sale)
-                            <tr class="bg-white">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{\Str::of($sale->user->name)->title()}}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{\Str::of($sale->customer->name)->title()}}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{\Str::of($sale->vehicle->name)->title()}} ({{$sale->vehicle->plate_no}})
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                     {{\Str::of($sale->zone->name)->title()}}
-                                </td>
-                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                     {{$sale->rate->amount}}/hr
-                                </td>
-                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                     {{number_format((float)(\Carbon\Carbon::parse($sale->entry_time)->diffInMinutes($sale->leave_time)/60), 2, '.', '')}} hrs
-                                </td>
-                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{number_format((float)(\Carbon\Carbon::parse($sale->entry_time)->diffInMinutes($sale->leave_time)/60)*$sale->rate->amount, 2, '.', '')}} /=
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                </td>
-                            </tr>
-                        @endforeach --}}
-
-                    </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            {{ $sales->links() }}
-
-
+            @livewire('sales-table')
         @endif
         </div>
     </div>

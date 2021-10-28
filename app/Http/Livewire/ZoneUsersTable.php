@@ -11,6 +11,11 @@ use App\Models\Zone;
 class ZoneUsersTable extends DataTableComponent
 {
     public Zone $zone;
+      // Change the page URL parameter for pagination
+    protected string $pageName = 'zone_users';
+
+    // A unique name to identify the table in session variables
+    protected string $tableName = 'zone_users';
 
     public function columns(): array
     {

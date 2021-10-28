@@ -29,14 +29,16 @@ text-{{$row->active? 'green':'red'}}-800">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
         </svg>
   </a>
-  <a class="relative inline-flex items-center px-2 py-2 border-b border-t border-gray-300 bg-white text-sm font-medium
+  <button type="button" wire:click.stop="$emit('triggerEdit',`{{ $row->name }}`)" class="relative inline-flex items-center px-2 py-2
+  border-b border-t
+  border-gray-300 bg-white text-sm font-medium
   text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
     <span class="sr-only">Edit</span>
     <!-- Heroicon name: solid/chevron-left -->
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
     </svg>
-  </a>
+  </button>
     @if($row->active)
       <button type="button" wire:click="$emit('triggerDelete',{{ $row->id }})" class="-ml-px relative inline-flex items-center px-2 py-2
       rounded-r-md border
@@ -69,14 +71,13 @@ text-{{$row->active? 'green':'red'}}-800">
                 Swal.fire({
                     title: 'Are You Sure?',
                     text: 'Site record will be deactivated!',
-                    type: "warning",
+                    icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: 'Deactivate!'
                 }).then((result) => {
             //if user clicks on delete
                     if (result.value) {
-                 // calling destroy method to delete
-                        @this.call('deactivate',zoneId);
+                        @this.call('deactivate',zoneId)
                         Swal.fire('Done!', '', 'success')
                     } else {
                         Swal.fire('Operation Cancelled!', '', 'warning')
@@ -88,7 +89,7 @@ text-{{$row->active? 'green':'red'}}-800">
                 Swal.fire({
                     title: 'Activate Site?',
                     text: 'Site record will be activated!',
-                    type: "warning",
+                    icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: 'Activate!'
                 }).then((result) => {
@@ -102,6 +103,27 @@ text-{{$row->active? 'green':'red'}}-800">
 
                     }
                 });
+            });
+             @this.on('triggerEdit', async (zone) => {
+                zone = String(zone)
+                // console.log(zone)
+                await Swal.fire({
+                  title: 'Enter your IP address',
+                  input: 'text',
+                  inputLabel: 'Your IP address',
+                  inputValue: zone,
+                  showCancelButton: true,
+                  inputValidator: (value) => {
+                    if (!value || value === zone) {
+                      return 'Please enter a valid Site name'
+                    }
+                  }
+                }).then((result)=>{
+                    if (result.value) {
+                        @this.call('update',zone,result.value);
+                      // Swal.fire(`Your New value is ${result.value}`)
+                    }
+                })
             });
         })
     </script>

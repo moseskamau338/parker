@@ -1298,9 +1298,6 @@ select {
 .grid {
 	display: grid;
 }
-.contents {
-	display: contents;
-}
 .hidden {
 	display: none;
 }
@@ -1433,17 +1430,14 @@ select {
 .max-w-lg {
 	max-width: 32rem;
 }
+.max-w-\[800px\] {
+	max-width: 800px;
+}
 .max-w-6xl {
 	max-width: 72rem;
 }
 .max-w-md {
 	max-width: 28rem;
-}
-.max-w-\[600px\] {
-	max-width: 600px;
-}
-.max-w-\[800px\] {
-	max-width: 800px;
 }
 .flex-1 {
 	flex: 1 1 0%;
@@ -1504,9 +1498,6 @@ select {
 .grid-cols-1 {
 	grid-template-columns: repeat(1, minmax(0, 1fr));
 }
-.grid-cols-2 {
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 .flex-col {
 	flex-direction: column;
 }
@@ -1515,9 +1506,6 @@ select {
 }
 .items-start {
 	align-items: flex-start;
-}
-.items-end {
-	align-items: flex-end;
 }
 .items-center {
 	align-items: center;
@@ -1611,9 +1599,6 @@ select {
 }
 .self-center {
 	align-self: center;
-}
-.overflow-auto {
-	overflow: auto;
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1718,10 +1703,6 @@ select {
 	--tw-border-opacity: 1;
 	border-color: rgba(243, 244, 246, var(--tw-border-opacity));
 }
-.border-gray-400 {
-	--tw-border-opacity: 1;
-	border-color: rgba(156, 163, 175, var(--tw-border-opacity));
-}
 .border-red-800 {
 	--tw-border-opacity: 1;
 	border-color: rgba(153, 27, 27, var(--tw-border-opacity));
@@ -1729,6 +1710,10 @@ select {
 .border-green-800 {
 	--tw-border-opacity: 1;
 	border-color: rgba(6, 95, 70, var(--tw-border-opacity));
+}
+.border-gray-400 {
+	--tw-border-opacity: 1;
+	border-color: rgba(156, 163, 175, var(--tw-border-opacity));
 }
 .bg-white {
 	--tw-bg-opacity: 1;
@@ -1823,9 +1808,6 @@ select {
 }
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
-}
-.bg-opacity-75 {
-	--tw-bg-opacity: 0.75;
 }
 .bg-cover {
 	background-size: cover;
@@ -1982,9 +1964,6 @@ select {
 .pt-10 {
 	padding-top: 2.5rem;
 }
-.pb-20 {
-	padding-bottom: 5rem;
-}
 .text-left {
 	text-align: left;
 }
@@ -1996,9 +1975,6 @@ select {
 }
 .align-middle {
 	vertical-align: middle;
-}
-.align-bottom {
-	vertical-align: bottom;
 }
 .font-sans {
 	font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -2549,10 +2525,6 @@ select {
 	--tw-ring-opacity: 1;
 	--tw-ring-color: rgba(79, 70, 229, var(--tw-ring-opacity));
 }
-.focus\:ring-red-500:focus {
-	--tw-ring-opacity: 1;
-	--tw-ring-color: rgba(239, 68, 68, var(--tw-ring-opacity));
-}
 .focus\:ring-opacity-50:focus {
 	--tw-ring-opacity: 0.5;
 }
@@ -2648,11 +2620,6 @@ select {
 		margin-right: -1.5rem;
 	}
 
-	.sm\:my-8 {
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-	}
-
 	.sm\:ml-3 {
 		margin-left: 0.75rem;
 	}
@@ -2697,10 +2664,6 @@ select {
 		display: block;
 	}
 
-	.sm\:inline-block {
-		display: inline-block;
-	}
-
 	.sm\:flex {
 		display: flex;
 	}
@@ -2717,20 +2680,12 @@ select {
 		height: 2.5rem;
 	}
 
-	.sm\:h-screen {
-		height: 100vh;
-	}
-
 	.sm\:w-10 {
 		width: 2.5rem;
 	}
 
 	.sm\:w-full {
 		width: 100%;
-	}
-
-	.sm\:w-auto {
-		width: auto;
 	}
 
 	.sm\:max-w-md {
@@ -2784,10 +2739,6 @@ select {
 
 	.sm\:grid-cols-3 {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-	}
-
-	.sm\:flex-row-reverse {
-		flex-direction: row-reverse;
 	}
 
 	.sm\:items-start {
@@ -2883,10 +2834,6 @@ select {
 		padding: 1.5rem;
 	}
 
-	.sm\:p-0 {
-		padding: 0px;
-	}
-
 	.sm\:px-6 {
 		padding-left: 1.5rem;
 		padding-right: 1.5rem;
@@ -2937,10 +2884,6 @@ select {
 
 	.sm\:text-center {
 		text-align: center;
-	}
-
-	.sm\:align-middle {
-		vertical-align: middle;
 	}
 
 	.sm\:text-sm {

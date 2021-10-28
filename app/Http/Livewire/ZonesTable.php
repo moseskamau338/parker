@@ -43,4 +43,16 @@ class ZonesTable extends DataTableComponent
         $zone->save();
         return true;
     }
+
+    public function update($initial, $new)
+    {
+        $res = Zone::where('name',$initial)->first();
+        if (!$res){
+            abort(404, 'No such Site exists');
+        }else{
+            $res->name = $new;
+            $res->save();
+        }
+        return back();
+    }
 }

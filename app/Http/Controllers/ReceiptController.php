@@ -32,6 +32,7 @@ class ReceiptController extends Controller
             $receipt->receipt_id = $request->ref;
             $receipt->amount = $request->amount;
             $receipt->user_id = auth('sanctum')->id();
+            $receipt->zone_id = auth('sanctum')->user()->zone->id;
              $receipt->file = $request->file('receipt')->store('receipts');
             try {
                  $receipt->save();

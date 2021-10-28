@@ -9,6 +9,9 @@ use App\Models\Sale;
 
 class SalesTable extends DataTableComponent
 {
+//    public array $bulkActions = [
+//        'exportSelected' => 'Export',
+//    ];
 
     public function columns(): array
     {

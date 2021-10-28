@@ -3,7 +3,7 @@
 - ~~sales~~
 ~~- Sales handover table - approval/disapproval~~
 - Shift handover (table)
-- CRUD Zone
+- View
   - Patner 
   - Rate
 - Patner data per zone

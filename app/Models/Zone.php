@@ -18,8 +18,8 @@ class Zone extends Model
     {
         return $this->hasMany(Shift::class);
     }
-    // public function customers()
-    // {
-    //     return $this->hasMany(Customer::class);
-    // }
+     public function users()
+     {
+         return $this->hasMany(User::class);
+     }
 }

@@ -17,9 +17,6 @@
    KES {{$row->cash_at_hand}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-   <span class="text-red-400">KES {{$row->cash_at_bank}}</span>
-</x-livewire-tables::table.cell>
-<x-livewire-tables::table.cell>
     <span class="font-bold"> {{$row->created_at}}</span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>

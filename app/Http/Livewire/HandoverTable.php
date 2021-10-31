@@ -20,7 +20,6 @@ class HandoverTable extends DataTableComponent
             Column::make('Cashier', 'shift.user.name')
             ->sortable()->searchable(),
             Column::make('Cash at Hand', 'cash_at_hand')->sortable()->searchable(),
-            Column::make('Cash at Bank', 'cash_at_bank')->sortable()->searchable(),
             Column::make('Total Sales', 'total_sales')->sortable()->searchable(),
             Column::make('Completed Sales', 'completed_sales_count'),
             Column::make('Incomplete Sales', 'incomplete_sales_count'),

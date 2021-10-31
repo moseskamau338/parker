@@ -11,9 +11,6 @@
     <span class="font-bold">KES {{$row->cash_at_hand}}</span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-    <span class="font-bold">KES {{$row->cash_at_bank}}</span>
-</x-livewire-tables::table.cell>
-<x-livewire-tables::table.cell>
    {{$row->completed_sales_count}} sales
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>

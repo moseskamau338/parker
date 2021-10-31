@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SaleResource;
+use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\User;
 use App\Models\SalesHandover;
 use App\Models\Vehicle;
 use Carbon\Carbon;
@@ -19,7 +21,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        return new SaleResource(Sale::all());
+        return new SaleResource(auth()->guard('sanctum')->user()->sales);
     }
 
     /**
@@ -43,39 +45,44 @@ class SaleController extends Controller
         $this->authorize('create', Sale::class);
         //validate:
         $request->validate([
-            'customer_id' => 'required|exists:App\Models\Customer,id',
-            'vehicle_id' => 'exists:App\Models\Vehicle,id',
-            'vehicle' => 'string',
+            'customer_id' => 'exists:App\Models\Customer,id',
+            'customer' => 'string',
             'rate_id' => 'required|exists:App\Models\Rate,id',
-            'zone_id' => 'required|exists:App\Models\Zone,id',
             'gateway_id' => 'exists:App\Models\Gateway,id',
             'payed_at' => 'date_format:Y-m-d H:i:s',
         ]);
 
         //check vihicle
-        $vehicle = null;
-        if(!$request->vehicle_id){
-            if ($request->vehicle){
-               $vehicle = Vehicle::firstOrCreate([
-                   'plate_no'=>$request->vehicle,
-                   'customer_id' => $request->customer_id
+        $customer = null;
+        if(!$request->customer_id){
+            if ($request->customer){
+               $customer = Customer::firstOrCreate([
+                   'name'=>$request->customer,
                ]);
             }else{
-                abort(422, 'Vehicle ID or name is required');
+                abort(422, 'New or existing numberplate is required');
             }
+        }
+
+        // abort if trying to re-register
+        $check_id = $request->customer_id ?? $customer->id;
+        $pending_sales = Sale::where('status', 'PENDING')->pluck('customer_id')->toArray();
+        if(in_array($check_id, $pending_sales)){
+            abort(422, 'This customer has a pending sales status! Finish one sale first');
         }
 
 
         $sale = Sale::create([
-            'customer_id'=> $request->customer_id,
+            'customer_id'=> $request->customer_id ?? $customer->id,
             'user_id' => auth()->id(),
-            'vehicle_id'=> $vehicle !== null? $vehicle->id: $request->vehicle_id,
             'rate_id'=> $request->rate_id,
-            'zone_id'=> $request->zone_id,
+            'zone_id'=> auth()->user()->zone_id,
             'gateway_id'=> $request->gateway_id,
             'entry_time' => now(),
             'qr' => $request->qr,
         ]);
+
+        $sale = $sale->with('customer','zone','rate')->find($sale->id);
 
         return response()->json($sale,200);
     }
@@ -171,7 +178,6 @@ class SaleController extends Controller
             'handover_to' => 'required|numeric|exists:users,id',//user id
            'amount_transferred' => 'required|numeric',
            'cash_at_hand' => 'required|numeric',
-           'cash_at_bank' => 'required|numeric',
         ]);
         //shift id
         $shift = $request->user()->currentShift();
@@ -186,7 +192,6 @@ class SaleController extends Controller
             'from'=>$request->user()->id,
             'amount_transferred'=>$request->amount_transferred,
             'cash_at_hand'=>$request->cash_at_hand,
-            'cash_at_bank'=>$request->cash_at_bank,
         ]);
         return response()->json(['status'=>true, 'message'=>'Handover created successfully','details'=>$handover]);
     }

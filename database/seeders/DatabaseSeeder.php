@@ -114,7 +114,12 @@ class DatabaseSeeder extends Seeder
         foreach (User::all()->except(1,2) as $user){
             $user->assignRole('cashier');
         }
-        User::find(1)->assignRole('admin');
+        $admin = User::find(1);
+        $admin->username = 'Mash';
+        $admin->email = 'moseskamau338@gmail.com';
+        $admin->save();
+        $admin->assignRole('admin');
+
         User::find(2)->assignRole('manager');
     }
 }

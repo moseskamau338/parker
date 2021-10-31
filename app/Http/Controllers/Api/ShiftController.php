@@ -77,7 +77,6 @@ class ShiftController extends Controller
         // require to know cash at bank
         $request->validate([
             'cash_at_hand' => 'required|numeric',
-            'cash_at_bank' => 'required|numeric',
         ]);
 
         $shift = $request->user()->currentShift();
@@ -96,7 +95,6 @@ class ShiftController extends Controller
         $handover = new Handover();
         $handover->shift_id = $shift->id;
          $handover->cash_at_hand = $request->cash_at_hand;
-         $handover->cash_at_bank = $request->cash_at_bank;
 
         // calculate totals from good sales
         // dd(Carbon::parse($shift->start)->diffInMinutes(Carbon::now()));

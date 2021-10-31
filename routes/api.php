@@ -11,24 +11,18 @@ use \App\Http\Controllers\Api\ZoneController;
 use Orion\Facades\Orion;
 use App\Http\Controllers\Api\SubscriptionController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 Route::post('login', [ApiAuthController::class, 'login']);
 Route::group(['middleware'=>"auth:sanctum"], function(){
     //account management
     Orion::resource('users', UserController::class);
+    Route::get('managers', [UserController::class, 'managers']);
     //customers
     Orion::resource('customers', CustomerController::class);
     Route::post('enroll/customer/{customer}', [SubscriptionController::class, 'subscribe']);
     Route::post('unsubscribe/customer/{customer}', [SubscriptionController::class, 'unSubscribe']);
+    //Resources
+    Orion::resource('gateways', \App\Http\Controllers\Api\GatewayController::class);
+    Orion::resource('rates', \App\Http\Controllers\Api\RateController::class);
 
     //zones
     Route::resource('zones', ZoneController::class );

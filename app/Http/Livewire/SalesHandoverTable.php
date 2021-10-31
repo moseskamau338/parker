@@ -21,7 +21,6 @@ class SalesHandoverTable extends DataTableComponent
             Column::make('Manager', 'to')->sortable()->searchable(),
             Column::make('Amount', 'amount_transferred')->sortable()->searchable(),
             Column::make('Cash at Hand', 'cash_at_hand')->sortable()->searchable(),
-            Column::make('Cash at Bank', 'cash_at_bank'),
             Column::make('Date', 'created_at'),
             Column::make('Approved', 'approved')
                 ->sortable()->searchable()

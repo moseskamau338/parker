@@ -21,8 +21,10 @@ class CustomerFactory extends Factory
      */
     public function definition()
     {
+        $this->faker->addProvider(new \Faker\Provider\Fakecar($this->faker));
+
         return [
-            'name'=>$this->faker->name(),
+            'name'=>$this->faker->vehicleRegistration(),
             'phone'=>$this->faker->phoneNumber()
         ];
     }

@@ -17,7 +17,6 @@ class CreateHandoversTable extends Migration
             $table->id();
             $table->foreignId('shift_id');
             $table->double('cash_at_hand');
-            $table->double('cash_at_bank');
             $table->double('total_sales');
             $table->integer('completed_sales_count');
             $table->integer('incomplete_sales_count');

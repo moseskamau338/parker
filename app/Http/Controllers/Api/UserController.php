@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use Orion\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,4 +17,10 @@ class UserController extends Controller
      */
     protected $model = User::class;
     protected $request = UserRequest::class;
+
+    public function managers()
+    {
+        $users = Role::where('name','manager')->first()->users;
+        return response()->json($users, 200);
+    }
 }

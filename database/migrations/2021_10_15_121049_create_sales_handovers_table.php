@@ -19,7 +19,6 @@ class CreateSalesHandoversTable extends Migration
             $table->foreignId('to');
             $table->foreignId('from');
             $table->double('cash_at_hand');
-            $table->double('cash_at_bank');
             $table->double('amount_transferred');
             $table->boolean('approved')->nullable();
             $table->foreignId('approved_by')->nullable();

@@ -64,14 +64,14 @@ class SalesTable extends DataTableComponent
 
                 foreach($records as $row) {
                     fputcsv($file, array(
-                        $row->user->username,
-                        $row->customer->name,
-                        $row->customer->type,
-                        $row->zone->name,
-                        (string)$row->rate->amount.'/'.$row->rate->rate,
+                        $row->user? $row->user->username : '',
+                        $row->customer? $row->customer->name : '',
+                        $row->customer? $row->customer->type : '',
+                        $row->zone? $row->zone->name : '',
+                        $row->rate? (string)$row->rate->amount.'/'.$row->rate->rate : '',
                         $row->status,
                         Carbon::parse($row->created_at)->diffInMinutes(Carbon::parse($row->leave_time)).' minutes',
-                        $row->gateway->name,
+                        $row->gateway? $row->gateway->name: '',
                         'KSH '.$row->totals,
                         $row->ref,
                         Carbon::parse($row->created_at)->toDateTimeString(),

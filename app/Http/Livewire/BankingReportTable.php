@@ -51,10 +51,10 @@ class BankingReportTable extends DataTableComponent
 
                 foreach($records as $row) {
                     fputcsv($file, array(
-                        $row->user->username,
+                        $row->user? $row->user->username : '',
                         $row->amount,
                         $row->receipt_id,
-                        $row->user->zone->name,
+                        $row->user && $row->user->zone? $row->user->zone->name : '',
                         Carbon::parse($row->created_at)->toDateTimeString(),
                         ));
                 }

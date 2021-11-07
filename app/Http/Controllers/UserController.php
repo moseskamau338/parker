@@ -24,27 +24,24 @@ class UserController extends Controller
     {
         $this->authorize('add-users');
 
-//        dd($request->all());
-
-         $user = User::create([
-             "name" => $request->name,
-              "username" => $request->username,
-              "email" => $request->email,
-              "zone_id" => $request->zone,
-              "phone" => $request->phone,
-              "nat_id" => $request->nat_id,
-              "password" => Hash::make($request->password),
-              ]);
-
-         //assign roles
-         $user->assignRole($request->roles);
-
-         session('notification', [
-            'color' => 'green',
-            'message' => 'User successfully added!'
-         ]);
-         return redirect('/users');
-
+        try{
+             $user = User::create([
+                 "name" => $request->name,
+                  "username" => $request->username,
+                  "email" => $request->email,
+                  "zone_id" => $request->zone,
+                  "phone" => $request->phone,
+                  "nat_id" => $request->nat_id,
+                  "password" => Hash::make($request->password),
+                  ]);
+             //assign roles
+             $user->assignRole($request->roles);
+             session()->flash('notifier',['text'=>__('User successfully added!')]);
+             return back();
+        }catch (\Throwable $e){
+            session()->flash('notifier',['text'=>__('Error: '.$e->getMessage()), 'type'=>'error']);
+             return redirect('/users');
+        }
     }
 
     public function roles()
@@ -54,7 +51,8 @@ class UserController extends Controller
 
     public function updateRoles(Request $request)
     {
-        dd($request->all());
+        session()->flash('notifier',['text'=>__('Feature coming soon!'), 'type'=>'error']);
+        return back();
 
     }
 }

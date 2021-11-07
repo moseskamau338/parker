@@ -3,6 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
     mode: 'jit',
     purge: [
+        "./config/livewire-notifier.php",
         './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',

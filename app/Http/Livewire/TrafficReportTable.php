@@ -11,9 +11,10 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class TrafficReportTable extends DataTableComponent
 {
-    public array $bulkActions = [
+    public $bulkActions = [
         'exportSelected' => 'Download CSV',
     ];
+    public bool $perPageAll = true;
     public function columns(): array
     {
         return [
@@ -41,7 +42,7 @@ class TrafficReportTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0){
            $headers = array(
                 "Content-type" => "text/csv",
-                "Content-Disposition" => "attachment; filename=traffic_report.csv",
+                "Content-Disposition" => "attachment; filename=traffic_report_".(int)now('Africa/Nairobi')->valueOf().'.csv',
                 "Pragma" => "no-cache",
                 "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
                 "Expires" => "0"

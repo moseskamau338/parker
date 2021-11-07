@@ -5,14 +5,14 @@
     {{ucwords($row->name)}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-    {{$row->created_at->diffForHumans()}}
-</x-livewire-tables::table.cell>
-<x-livewire-tables::table.cell>
 
 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{$row->active? 'green':'red'}}-100
 text-{{$row->active? 'green':'red'}}-800">
   {{$row->active? 'ACTIVE':'INACTIVE'}}
 </span>
+</x-livewire-tables::table.cell>
+<x-livewire-tables::table.cell>
+    {{$row->created_at->diffForHumans()}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
 <span class="relative z-0 inline-flex shadow-sm rounded-md">

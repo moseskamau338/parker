@@ -10,14 +10,14 @@ use App\Models\Zone;
 
 class ZonesTable extends DataTableComponent
 {
-
+    public bool $perPageAll = true;
     public function columns(): array
     {
         return [
             Column::make('Id')->addClass('sticky'),
             Column::make('Name')->addClass('sticky'),
             Column::make('Status')->addClass('sticky'),
-            Column::make('Created At')->addClass('sticky'),
+            Column::make('Created')->addClass('sticky'),
             Column::make('Actions')->addClass('sticky'),
         ];
     }

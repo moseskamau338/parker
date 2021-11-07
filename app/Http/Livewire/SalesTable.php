@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Response;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Sale;
 
 class SalesTable extends DataTableComponent
 {
-//    public array $bulkActions = [
-//        'exportSelected' => 'Export',
-//    ];
+    public $bulkActions = [
+        'exportSelected' => 'Download CSV',
+    ];
+    public bool $perPageAll = true;
 
     public function columns(): array
     {
@@ -39,5 +42,46 @@ class SalesTable extends DataTableComponent
     public function rowView(): string
     {
         return 'livewire-tables.rows.sales_table';
+    }
+      public function exportSelected()
+    {
+        if ($this->selectedRowsQuery->count() > 0){
+           $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=sales_report_".(int)now('Africa/Nairobi')->valueOf().'.csv',
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $records = $this->selectedRowsQuery()->get();
+            $columns = array('Agent','Customer','Type','Site','Rate','Status','Duration (Mins)','Payment Method','Amount','Transaction Ref.','Created At');
+
+            $callback = function() use ($records, $columns)
+            {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+                foreach($records as $row) {
+                    fputcsv($file, array(
+                        $row->user->username,
+                        $row->customer->name,
+                        $row->customer->type,
+                        $row->zone->name,
+                        (string)$row->rate->amount.'/'.$row->rate->rate,
+                        $row->status,
+                        Carbon::parse($row->created_at)->diffInMinutes(Carbon::parse($row->leave_time)).' minutes',
+                        $row->gateway->name,
+                        'KSH '.$row->totals,
+                        $row->ref,
+                        Carbon::parse($row->created_at)->toDateTimeString(),
+                        ));
+                }
+                fclose($file);
+            };
+
+            return Response::stream($callback, 200, $headers);
+
+        }
     }
 }

@@ -1,17 +1,14 @@
 <x-livewire-tables::table.cell>
-{{ucwords($row->user->username)}}
+{{ucwords($row->user->username ?? '----')}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{ucwords($row->customer->name)}}
+{{ucwords($row->customer->name?? '----')}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
 {{ucwords($row->customer->type)}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{$row->vehicle->plate_no}}
-</x-livewire-tables::table.cell>
-<x-livewire-tables::table.cell>
-{{ucwords($row->zone->name)}}
+{{ucwords($row->zone->name?? '----')}}
 </x-livewire-tables::table.cell>
 {{--<x-livewire-tables::table.cell>--}}
 {{--#{{$row->shift_id}}--}}
@@ -29,12 +26,12 @@
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
 {{
-    \Carbon\Carbon::parse($row->entry_time)->diffInMinutes(\Carbon\Carbon::parse($row->leave_time))
+    \Carbon\Carbon::parse($row->created_at)->diffInMinutes(\Carbon\Carbon::parse($row->leave_time))
 
 }}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{$row->gateway->name}}
+{{$row->gateway->name?? '----'}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
     KES {{floatval($row->totals)}}

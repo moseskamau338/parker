@@ -61,9 +61,9 @@ class Sale extends Model
         //calculates the time between entry and leave
         //if no leave time, use now
         if (!$this->leave_time){
-            return Carbon::now()->diffInSeconds(Carbon::now(), false);
+            return (Carbon::parse($this->created_at)->diffInSeconds(Carbon::now('Africa/Nairobi'), false));
         }else{
-            return Carbon::parse($this->leave_time)->diffInSeconds(Carbon::parse($this->entry_time));
+            return Carbon::parse($this->leave_time)->diffInSeconds(Carbon::parse($this->created_at));
         }
 
     }

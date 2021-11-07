@@ -99,7 +99,7 @@ class ShiftController extends Controller
         // calculate totals from good sales
         // dd(Carbon::parse($shift->start)->diffInMinutes(Carbon::now()));
         $shift_start = date('Y-m-d H:i:s', strtotime($shift->start));
-        $shift_end = date('Y-m-d H:i:s', strtotime(Carbon::now()));
+        $shift_end = date('Y-m-d H:i:s', strtotime(Carbon::now('Africa/Nairobi')));
 
         $total_sales = 0;
         $paid_sales = Sale::where('created_at', '<=',$shift_end)
@@ -125,10 +125,10 @@ class ShiftController extends Controller
 
         $handover->total_sales = $total_sales;
         $handover->completed_sales_count = count($paid_sales);
-        $handover->incomplete_sales_count = Sale::whereBetween('created_at', [Shift::first()->start, Carbon::now()])
+        $handover->incomplete_sales_count = Sale::whereBetween('created_at', [Shift::first()->start, Carbon::now('Africa/Nairobi')])
         ->where('status', 'PENDING')->orWhere('status', 'CANCELED')->count();
 
-        $shift->end = Carbon::now();
+        $shift->end = Carbon::now('Africa/Nairobi');
 
         try {
             $handover->save();

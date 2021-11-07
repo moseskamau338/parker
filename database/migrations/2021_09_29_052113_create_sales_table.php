@@ -20,7 +20,6 @@ class CreateSalesTable extends Migration
             $table->foreignId('rate_id');
             $table->foreignId('zone_id');
             $table->foreignId('gateway_id')->nullable();
-            $table->timestamp('entry_time');
             $table->timestamp('leave_time')->nullable();
             $table->string('status')->default('PENDING'); //CANCELED,PAID,PENDING
             $table->text('totals')->nullable();

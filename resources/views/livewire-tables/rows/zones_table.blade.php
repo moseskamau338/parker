@@ -108,9 +108,9 @@ text-{{$row->active? 'green':'red'}}-800">
                 zone = String(zone)
                 // console.log(zone)
                 await Swal.fire({
-                  title: 'Enter your IP address',
+                  title: 'Enter a valid name',
                   input: 'text',
-                  inputLabel: 'Your IP address',
+                  inputLabel: 'Your Site Name',
                   inputValue: zone,
                   showCancelButton: true,
                   inputValidator: (value) => {

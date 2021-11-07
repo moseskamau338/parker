@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -96,7 +97,7 @@ class User extends Authenticatable
             $shift = Shift::create([
                 'user_id'=>$this->id,
                 'zone_id'=>$this->zone->id,
-                'start'=>now(),
+                'start'=>Carbon::now('Africa/Nairobi'),
             ]);
         }
         return $shift;
@@ -105,7 +106,7 @@ class User extends Authenticatable
     {
         //this shifts opened latest
         $current_shifts = Shift::where('user_id',  $this->id)
-            ->whereDate('start','<=', now())
+            ->whereDate('start','<=', Carbon::now('Africa/Nairobi'))
             ->where('end', null)
 //            ->whereDate('end', null)
             ->latest()->get();

@@ -58,13 +58,13 @@ class TrafficReportTable extends DataTableComponent
 
                 foreach($records as $row) {
                     fputcsv($file, array(
-                        $row->customer->name,
+                        $row->customer? $row->customer->name: '',
                         Carbon::parse($row->created_at)->toDateTimeString(),
                         Carbon::parse($row->created_at)->toDateTimeString(),
                         Carbon::parse($row->leave_time)->toDateTimeString() ?? '----',
                         Carbon::parse($row->created_at)->diffInMinutes(Carbon::parse($row->leave_time)),
-                        $row->zone->name,
-                        $row->gateway->name,
+                        $row->zone?$row->zone->name: '',
+                        $row->gateway?$row->gateway->name: '',
                         ));
                 }
                 fclose($file);

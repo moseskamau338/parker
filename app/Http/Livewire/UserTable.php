@@ -67,7 +67,7 @@ class UserTable extends DataTableComponent
                         $row->email,
                         $row->phone,
                         $row->nat_id,
-                        $row->zone->name,
+                        $row->zone? $row->zone->name : '',
                         Carbon::parse($row->created_at)->toDateTimeString(),
                         ));
                 }

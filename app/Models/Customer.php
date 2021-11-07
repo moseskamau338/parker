@@ -57,7 +57,7 @@ class Customer extends Model
 
     public function subscriptionDays(Subscription $subscription)
     {
-        return Carbon::now()
+        return Carbon::now('Afric/Nairobi')
             ->diffInDays(Carbon::parse($subscription->started)
                 ->addDays($subscription->plan->cycle), false);
 
@@ -71,7 +71,7 @@ class Customer extends Model
         $subscription = new Subscription();
         $subscription->customer_id = $this->id;
         $subscription->plan_id = $plan;
-        $subscription->started = now();
+        $subscription->started = Carbon::now('Africa/Nairobi');
         $subscription->status = 1;
 
         return $subscription->save();

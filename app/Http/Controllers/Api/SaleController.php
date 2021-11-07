@@ -78,7 +78,6 @@ class SaleController extends Controller
             'rate_id'=> $request->rate_id,
             'zone_id'=> auth()->user()->zone_id,
             'gateway_id'=> $request->gateway_id,
-            'entry_time' => now(),
             'qr' => $request->qr,
         ]);
 
@@ -105,7 +104,7 @@ class SaleController extends Controller
 
 
         //get total = time(hrs) * rate
-        $totals = round(((Carbon::parse($sale->entry_time)->diffInMinutes(Carbon::now())) / 60) * $sale->rate->amount);
+        $totals = round(((Carbon::parse($sale->created_at)->diffInMinutes(Carbon::now('Africa/Nairobi'))) / 60) * $sale->rate->amount);
 
         //if already closed, abort
         if ($sale->status === 'PAID'){
@@ -158,10 +157,10 @@ class SaleController extends Controller
     public function directPay(Request $request, Sale $sale, $totals)
     {
         $sale->gateway_id = $request->gateway_id ?? null;
-        $sale->leave_time = now();
+        $sale->leave_time = Carbon::now('Africa/Nairobi');
         $sale->totals = $totals;
         $sale->status = 'PAID';
-        $sale->payed_at = now();
+        $sale->payed_at = Carbon::now('Africa/Nairobi');
 
         $sale->save();
 

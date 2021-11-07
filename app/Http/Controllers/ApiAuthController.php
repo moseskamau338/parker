@@ -14,7 +14,6 @@ class ApiAuthController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
-            'sitename' => 'required',
         ]);
 
         //authenticate with both email/username
@@ -37,7 +36,7 @@ class ApiAuthController extends Controller
             $shift = $user->startShift();
             $user->shift = $shift;
             //login and send back user
-            $user['token'] = $user->createToken($request->sitename)->plainTextToken;
+            $user['token'] = $user->createToken($user->zone->name)->plainTextToken;
             return $user;
         }
 

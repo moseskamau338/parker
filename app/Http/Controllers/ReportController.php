@@ -20,7 +20,7 @@ class ReportController extends Controller
     public function dashboard()
     {
         $custmer_current = Customer::count();
-        $custmer_prev = Customer::whereDate('created_at','<', Carbon::now()->subDays(30))->count();
+        $custmer_prev = Customer::whereDate('created_at','<', Carbon::now('Africa/Nairobi')->subDays(30))->count();
         $customer_percentage = call_user_func(function($custmer_current, $custmer_prev){
             if($custmer_prev == 0){
                 return 100;

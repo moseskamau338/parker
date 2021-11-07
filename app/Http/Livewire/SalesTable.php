@@ -19,7 +19,6 @@ class SalesTable extends DataTableComponent
             Column::make('Agent', 'user')->searchable()->sortable(),
             Column::make('Customer', 'customer')->searchable()->sortable(),
             Column::make('Type', 'customer.type')->searchable()->sortable(),
-            Column::make('Vehicle', 'vehicle')->searchable()->sortable(),
             Column::make('Site', 'zone')->searchable()->sortable(),
 //            Column::make('Shift', 'shift'),
             Column::make('Rate', 'rate')->searchable()->sortable(),

@@ -42,7 +42,7 @@
               <label for="cover-photo" class="block text-sm font-medium text-gray-700">
                 Receipt Note (File)
               </label>
-              <input name="receipt" type="file">
+              <input name="receipt" accept=".pdf,.jpg,.png,.jpeg" type="file">
             </div>
             @error('file') <span class="error">{{ $message }}</span> @enderror
           </div>

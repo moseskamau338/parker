@@ -110,16 +110,16 @@ class ShiftController extends Controller
             if ($sale->created_at->gte($shift_start)) {
                 return $sale;
             }
-        });
+        })->toArray();
 
-        // dd($shift_start,$paid_sales);
+        $paid_sales = array_values(array_filter($paid_sales, function($value){ return !is_null($value) && $value !== '';}));
 
         if (count($paid_sales) > 0) {
+            $totals = [];
            //loop through and calculate
-           $totals = $paid_sales->map(function($sale){
-               return $sale->totals;
-           })->toArray();
-        //    dd($totals);
+            foreach($paid_sales as $sale){
+               array_push($totals, $sale['totals']);
+           };
           $total_sales = array_sum($totals);
         }
 

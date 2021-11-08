@@ -21,7 +21,15 @@ class SaleController extends Controller
      */
     public function index()
     {
-        return new SaleResource(auth()->guard('sanctum')->user()->sales);
+        $data = auth()->guard('sanctum')->user()->sales;
+        foreach($data as $sale){
+            $sale['customer'] = $sale->customer;
+            $sale['rate'] = $sale->rate;
+            $sale['gateway'] = $sale->gateway;
+            $sale['zone'] = $sale->zone;
+            $sale['user'] = $sale->user;
+        }
+        return new SaleResource($data);
     }
 
     /**

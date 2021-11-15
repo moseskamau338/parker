@@ -35,6 +35,8 @@ class SaleController extends Controller
     {
         $sale = $sale->with('customer','rate', 'gateway', 'zone', 'user')
             ->where('id', $sale->id)->first();
+        // $sale->status === 'PAID' ? null :
+        $sale['current_rate'] = $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'));
         return new SaleResource($sale);
     }
 
@@ -119,7 +121,7 @@ class SaleController extends Controller
 
         //get total = time(hrs) * rate
 //        $totals = round(((Carbon::parse($sale->created_at)->diffInMinutes(Carbon::now('Africa/Nairobi'))) / 60) * $sale->rate->amount);
-        $totals = $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'));
+        $totals = $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'))->fee;
 
         //if already closed, abort
         if ($sale->status === 'PAID'){
@@ -168,7 +170,7 @@ class SaleController extends Controller
 
 
     }
-    public function getParkingFee($entryTime,$exitTime)
+    public function getParkingFee($entryTime,$exitTime): Object
     {
         $fee=0;
         $exT=date("Y-m-d H:i:s", strtotime($exitTime));
@@ -193,7 +195,7 @@ class SaleController extends Controller
             }
         }else{$fee=-99;}
         //return floor($duration)." Min  at  Ksh".$fee;
-        return $fee;
+        return (object)['fee'=>$fee, 'time'=>floor($duration)];
         }
     public function directPay(Request $request, Sale $sale, $totals)
     {

@@ -21,7 +21,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $data = auth()->guard('sanctum')->user()->sales;
+        $data = auth()->guard('sanctum')->user()->zone->sales;
         foreach($data as $sale){
             $sale['customer'] = $sale->customer;
             $sale['rate'] = $sale->rate;
@@ -35,8 +35,7 @@ class SaleController extends Controller
     {
         $sale = $sale->with('customer','rate', 'gateway', 'zone', 'user')
             ->where('id', $sale->id)->first();
-        // $sale->status === 'PAID' ? null :
-        $sale['current_rate'] = $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'));
+        $sale['current_rate'] =  $sale->status === 'PAID' ? null : $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'));
         return new SaleResource($sale);
     }
 

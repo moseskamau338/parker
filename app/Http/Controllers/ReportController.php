@@ -25,7 +25,7 @@ class ReportController extends Controller
             if($custmer_prev == 0){
                 return 100;
             }else{
-                return (($custmer_current - $custmer_prev)/$custmer_prev)*100;
+                return round((($custmer_current - $custmer_prev)/$custmer_prev)*100, 2);
             }
         }, $custmer_current, $custmer_prev);
         //sales

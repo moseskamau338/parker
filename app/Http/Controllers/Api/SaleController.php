@@ -36,7 +36,7 @@ class SaleController extends Controller
     {
         $sale = $sale->with('customer','rate', 'gateway', 'zone', 'user')
             ->where('id', $sale->id)->first();
-        $sale['current_rate'] =  $sale->status === 'PAID' ? null : $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'));
+        $sale['current_rate'] =  $sale->status === 'PAID' ? null : $sale->getParkingFee(Carbon::now('Africa/Nairobi'));
         return new SaleResource($sale);
     }
 
@@ -127,7 +127,7 @@ class SaleController extends Controller
 
         //get total = time(hrs) * rate
 //        $totals = round(((Carbon::parse($sale->created_at)->diffInMinutes(Carbon::now('Africa/Nairobi'))) / 60) * $sale->rate->amount);
-        $totals = $this->getParkingFee($sale->created_at,Carbon::now('Africa/Nairobi'))->fee;
+        $totals = $sale->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
 
         //if already closed, abort
         if ($sale->status === 'PAID'){
@@ -176,33 +176,6 @@ class SaleController extends Controller
 
 
     }
-    public function getParkingFee($entryTime,$exitTime): Object
-    {
-        $fee=0;
-        $exT=date("Y-m-d H:i:s", strtotime($exitTime));
-        $enT=date("Y-m-d H:i:s", strtotime($entryTime));
-
-        $totalSecondsDiff = (strtotime($exT)-strtotime($enT));
-        $totalMinutesDiff = $totalSecondsDiff/60;
-
-        $duration=$totalMinutesDiff;
-        if($duration>=0){
-            if(($duration>=0)&&($duration<16)){$fee=0;}
-            elseif(($duration>=16)&&($duration<=60)){$fee=50;}
-            elseif(($duration>=61)&&($duration<=120)){$fee=150;}
-            elseif(($duration>=121)&&($duration<=180)){$fee=250;}
-            elseif(($duration>=181)&&($duration<=240)){$fee=350;}
-            elseif($duration>240){
-                $init=350;
-                $diff=(int)(($duration-240)/60);//7.9round up get full and modulus
-                if(($diff%60)>0){
-                    $fee=($init+(100*$diff))+100;
-                }else{$fee=($init+(100*$diff));}
-            }
-        }else{$fee=-99;}
-        //return floor($duration)." Min  at  Ksh".$fee;
-        return (object)['fee'=>$fee, 'time'=>floor($duration)];
-        }
     public function directPay(Request $request, Sale $sale, $totals)
     {
         $sale->gateway_id = $request->gateway_id ?? null;

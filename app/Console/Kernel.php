@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Carbon\Carbon;
+use App\Models\Sale;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,6 +27,26 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // daily midnight clear all pending
+         $schedule->call(function () {
+           $pending_sales = Sale::where('status', 'PENDING')->get();
+           foreach($pending_sales as $sale){
+             $totals = $sale->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
+
+                $sale->totals = $totals;
+               $sale->status = 'LOSS';
+               $sale->leave_time = Carbon::now('Africa/Nairobi');
+               $sale->payed_at = Carbon::now('Africa/Nairobi');
+
+               $sale->save();
+            }
+        })
+         ->daily()
+         ->timeZone('Africa/Nairobi')
+         ->evenInMaintenanceMode()
+         ->when(function(){
+            Sale::where('status', 'PENDING')->count() > 0;
+         });
     }
 
     /**

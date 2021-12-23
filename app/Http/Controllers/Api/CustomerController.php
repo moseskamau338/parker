@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Orion\Http\Controllers\Controller;
+use Orion\Http\Requests\Request;
+use Orion\Specs\Builders\Builder;
 
 class CustomerController extends Controller
 {
@@ -14,5 +16,12 @@ class CustomerController extends Controller
      */
     protected $model = Customer::class;
     // protected $request = CustomerRequest::class;
-
+//    protected function buildIndexFetchQuery(Request $request, array $requestedRelations): Builder
+//    {
+//        $query = parent::buildIndexFetchQuery($request, $requestedRelations);
+//
+//        $query->where('zone_id');
+//
+//        return $query;
+//    }
 }

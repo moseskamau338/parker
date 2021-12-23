@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\User;
 use App\Models\SalesHandover;
 use App\Models\Vehicle;
+use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -85,7 +86,13 @@ class SaleController extends Controller
         if(in_array($check_id, $pending_sales)){
             abort(422, 'This customer has a pending sales status! Finish one sale first');
         }
-
+        // abort if customer is in another zone
+        $pending_zonal_sales = Sale::where('status', 'PENDING')
+            ->whereIn('zone_id', Zone::all()->except(auth()->user()->zone->id)->pluck('id')->toArray())
+            ->pluck('customer_id')->toArray();
+         if(in_array($check_id, $pending_zonal_sales)){
+            abort(422, 'Customer cannot be parking in two zones at the same time. Finish one sale first.');
+        }
 
         $sale = Sale::create([
             'customer_id'=> $request->customer_id ?? $customer->id,

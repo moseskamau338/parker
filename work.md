@@ -1,3 +1,14 @@
+## Issues:
+Estimate and actual fee
+closing sale - shows incorrect figure & and status still pending
+user cant login until session is closed - MK to fix
+Add account login reset function on site
+Rates are off
+Lost sale flow [trans ref]
+
+
+
+
 # Tasks
 - ~~Hash user passwords~~
 - ~~sales~~

@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\User;
 use App\Models\SalesHandover;
 use App\Models\Vehicle;
+use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,24 @@ class SaleController extends Controller
      */
     public function index()
     {
-        return new SaleResource(auth()->guard('sanctum')->user()->sales);
+
+        $data = auth()->guard('sanctum')->user()->zone->sales;
+        foreach($data as $sale){
+            $sale['customer'] = $sale->customer;
+            $sale['rate'] = $sale->rate;
+            $sale['gateway'] = $sale->gateway;
+            $sale['zone'] = $sale->zone;
+            $sale['user'] = $sale->user;
+        }
+        return new SaleResource($data);
+    }
+    public function show(Sale $sale)
+    {
+        $sale = $sale->with('customer','rate', 'gateway', 'zone', 'user')
+            ->where('id', $sale->id)->first();
+        $sale['current_rate'] =  $sale->status === 'PAID' ? null : $sale->getParkingFee(Carbon::now('Africa/Nairobi'));
+        return new SaleResource($sale);
+
     }
 
     /**
@@ -71,6 +89,14 @@ class SaleController extends Controller
             abort(422, 'This customer has a pending sales status! Finish one sale first');
         }
 
+        // abort if customer is in another zone
+        $pending_zonal_sales = Sale::where('status', 'PENDING')
+            ->whereIn('zone_id', Zone::all()->except(auth()->user()->zone->id)->pluck('id')->toArray())
+            ->pluck('customer_id')->toArray();
+         if(in_array($check_id, $pending_zonal_sales)){
+            abort(422, 'Customer cannot be parking in two zones at the same time. Finish one sale first.');
+        }
+
 
         $sale = Sale::create([
             'customer_id'=> $request->customer_id ?? $customer->id,
@@ -104,7 +130,10 @@ class SaleController extends Controller
 
 
         //get total = time(hrs) * rate
-        $totals = round(((Carbon::parse($sale->created_at)->diffInMinutes(Carbon::now('Africa/Nairobi'))) / 60) * $sale->rate->amount);
+
+//        $totals = round(((Carbon::parse($sale->created_at)->diffInMinutes(Carbon::now('Africa/Nairobi'))) / 60) * $sale->rate->amount);
+        $totals = $sale->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
+
 
         //if already closed, abort
         if ($sale->status === 'PAID'){
@@ -153,7 +182,6 @@ class SaleController extends Controller
 
 
     }
-
     public function directPay(Request $request, Sale $sale, $totals)
     {
         $sale->gateway_id = $request->gateway_id ?? null;

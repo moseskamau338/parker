@@ -26,6 +26,7 @@ class ReportController extends Controller
                 return 100;
             }else{
                 return round((($custmer_current - $custmer_prev)/$custmer_prev)*100, 2);
+
             }
         }, $custmer_current, $custmer_prev);
         //sales

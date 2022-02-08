@@ -68,32 +68,46 @@ class Sale extends Model
 
     }
     //helpers
+     public function getMidnightOfTimestamp($timestamp)
+     {
+        $timestamp_datetime=date("Y-m-d H:i:s", strtotime($timestamp));
+        $timestamp_date = date('Y-m-d', strtotime($timestamp_datetime));
+        return date("Y-m-d H:i:s", strtotime($timestamp_date." 23:59:59"));
+    }//end getMidnightOfTimestamp
      public function getParkingFee($exitTime): Object
     {
         $entryTime = $this->created_at;
         $fee=0;
         $exT=date("Y-m-d H:i:s", strtotime($exitTime));
         $enT=date("Y-m-d H:i:s", strtotime($entryTime));
+        $midnightT=$this->getMidnightOfTimestamp($entryTime);
 
         $totalSecondsDiff = (strtotime($exT)-strtotime($enT));
-        $totalMinutesDiff = $totalSecondsDiff/60;
+        $totalMinutesDiff = intval($totalSecondsDiff/60);
+
+        $totalSecondsDiffMidnight = (strtotime($midnightT)-strtotime($enT));
+        $totalMinutesDiffMidnight = intval($totalSecondsDiffMidnight/60);
 
         $duration=$totalMinutesDiff;
+        if($duration>$totalMinutesDiffMidnight){
+           $duration=$totalMinutesDiffMidnight;
+        }
+
         if($duration>=0){
             if(($duration>=0)&&($duration<16)){$fee=0;}
-            elseif(($duration>=16)&&($duration<=60)){$fee=50;}
-            elseif(($duration>=61)&&($duration<=120)){$fee=150;}
-            elseif(($duration>=121)&&($duration<=180)){$fee=250;}
-            elseif(($duration>=181)&&($duration<=240)){$fee=350;}
-            elseif($duration>240){
-                $init=350;
-                $diff=(int)(($duration-240)/60);//7.9round up get full and modulus
+            elseif(($duration>=16)&&($duration<=240)){$fee=100;}
+            elseif(($duration>=241)&&($duration<=360)){$fee=150;}
+            elseif(($duration>=361)&&($duration<=480)){$fee=200;}
+            elseif(($duration>=481)&&($duration<=720)){$fee=300;}
+            elseif($duration>720){
+                $init=300;
+                $diff=(int)(($duration-720)/60);//7.9round up get full and modulus
                 if(($diff%60)>0){
-                    $fee=($init+(100*$diff))+100;
-                }else{$fee=($init+(100*$diff));}
+                $fee=($init+(50*$diff))+50;
+                }else{$fee=($init+(50*$diff));}
             }
         }else{$fee=-99;}
-            //return floor($duration)." Min  at  Ksh".$fee;
-            return (object)['fee'=>$fee, 'time'=>floor($duration)];
+        //return floor($duration)." Min  at  Ksh".$fee;
+        return (object)['fee'=>$fee, 'time'=>floor($duration)];
     }
 }

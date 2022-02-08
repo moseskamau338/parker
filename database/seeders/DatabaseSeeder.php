@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         //default gateways : constant
         Gateway::create(['name'=>'MPESA']);
         Gateway::create(['name'=>'CASH']);
+        Gateway::create(['name'=>'SYSTEM AUTO']);
 
 //        Rate::factory(5)->create();
 

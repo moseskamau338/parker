@@ -55,4 +55,10 @@ class UserController extends Controller
         return back();
 
     }
+
+    public function logout()
+    {
+
+        return back();
+    }
 }

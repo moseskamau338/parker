@@ -35,6 +35,8 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/users/create', [\App\Http\Controllers\UserController::class, 'store'])->name('create.user');
 
+    Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('users.logout');
+
     //Manage roles
     Route::get('/users/roles', [\App\Http\Controllers\UserController::class, 'roles'])->name('roles');
     Route::post('/update/roles', [\App\Http\Controllers\UserController::class, 'updateRoles'])->name('update.roles');

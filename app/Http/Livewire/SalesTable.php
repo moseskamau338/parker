@@ -36,7 +36,7 @@ class SalesTable extends DataTableComponent
 
     public function query(): Builder
     {
-        return Sale::query();
+        return Sale::query()->latest();
     }
 
     public function rowView(): string

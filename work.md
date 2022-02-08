@@ -1,26 +1,17 @@
 ## Issues:
 Estimate and actual fee
-closing sale - shows incorrect figure & and status still pending
 user cant login until session is closed - MK to fix
-Add account login reset function on site
-Rates are off
 Lost sale flow [trans ref]
 
 
 
 
 # Tasks
-- ~~Hash user passwords~~
-- ~~sales~~
-~~- Sales handover table - approval/disapproval~~
-- Shift handover (table)
-- View
-  - Patner 
-  - Rate
-- Patner data per zone
-- Reports (with filters):
-  - Banking
-  - Sales
+- ~~Add 'SYSTEM AUTO' gateway~~
+- ~~display sales with descending order~~
+- ~~Implement new rate function~~
+- Add account login reset function on site
+- Check on autocomplete on midnight
 
 
 # Algorithms

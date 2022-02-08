@@ -23,7 +23,11 @@ class SaleController extends Controller
     public function index()
     {
 
-        $data = auth()->guard('sanctum')->user()->zone->sales;
+        $data = auth()->guard('sanctum')->user()->zone->sales
+            ->sort(function($a, $b)  {
+                if ($a == $b) { return 0;}
+                return ($a > $b) ? -1 : 1;
+            });
         foreach($data as $sale){
             $sale['customer'] = $sale->customer;
             $sale['rate'] = $sale->rate;

@@ -4,7 +4,6 @@ deployment:
     - export DEPLOYPATH=/home/katalys1/laravel_cores/
     - /bin/composer install
     - /bin/php ./artisan config:cache
-    - /bin/cp -r * $DEPLOYPATH #copy all from root
-#    - /bin/cp -r ./public/* $DEPLOYPATH/public_html/
+    - /bin/cp -r * $DEPLOYPATH
     - /bin/cp ./public/js/*.js $DEPLOYPATH/public_html/js
     - /bin/cp ./public/css/*.css $DEPLOYPATH/public_html/css

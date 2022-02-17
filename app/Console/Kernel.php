@@ -31,14 +31,7 @@ class Kernel extends ConsoleKernel
          $schedule->call(function () {
            $pending_sales = Sale::where('status', 'PENDING')->get();
            foreach($pending_sales as $sale){
-             $totals = $sale->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
-
-                $sale->totals = $totals;
-               $sale->status = 'LOSS';
-               $sale->leave_time = Carbon::now('Africa/Nairobi');
-               $sale->payed_at = Carbon::now('Africa/Nairobi');
-
-               $sale->save();
+              $sale->markLost();
             }
         })
          ->daily()

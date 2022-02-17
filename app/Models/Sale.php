@@ -110,4 +110,16 @@ class Sale extends Model
         //return floor($duration)." Min  at  Ksh".$fee;
         return (object)['fee'=>$fee, 'time'=>floor($duration)];
     }
+
+    public function markLost()
+    {
+        $totals = $this->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
+        $this->totals = $totals;
+        $this->status = 'LOSS';
+        $this->leave_time = Carbon::now('Africa/Nairobi');
+        $this->payed_at = Carbon::now('Africa/Nairobi');
+        $this->gateway_id = 3;
+
+        $this->save();
+    }
 }

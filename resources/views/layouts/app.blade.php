@@ -37,9 +37,12 @@
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
-
-        <div class="min-h-screen bg-gray-100">
-            <livewire:notifier/>
+         @if (session()->has('message'))
+            <div class="w-full h-[min-content] absolute top-[60px] z-10">
+                @include('layouts.includes.alert')
+            </div>
+        @endif
+        <div class="min-h-screen relative bg-gray-100">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->

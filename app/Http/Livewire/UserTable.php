@@ -25,7 +25,7 @@ class UserTable extends DataTableComponent
             Column::make('phone')->searchable()->sortable(),
             Column::make('ID Number', 'nat_id')->searchable()->sortable(),
             Column::make('Zone', 'zone.name')->searchable()->sortable(),
-            Column::make('Created')->sortable(),
+            Column::make('Created', 'created_at')->sortable(),
 //            Column::make('Actions')->sortable(),
         ];
     }
@@ -33,7 +33,8 @@ class UserTable extends DataTableComponent
     public function query(): Builder
     {
         return User::query()
-            ->where('id', '!=', auth()->id());
+            ->where('id', '!=', auth()->id())
+            ->latest();
     }
 
     public function rowView(): string

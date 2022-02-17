@@ -1,6 +1,4 @@
 ## Issues:
-Estimate and actual fee
-user cant login until session is closed - MK to fix
 Lost sale flow [trans ref]
 
 
@@ -10,7 +8,7 @@ Lost sale flow [trans ref]
 - ~~Add 'SYSTEM AUTO' gateway~~
 - ~~display sales with descending order~~
 - ~~Implement new rate function~~
-- Add account login reset function on site
+~~- Add account login reset function on site~~
 - Check on autocomplete on midnight
 
 

@@ -45,7 +45,6 @@ class SalesTable extends DataTableComponent
     }
     public function exportSelected()
     {
-        dd($this->selectedRowsQuery->count());
         if ($this->selectedRowsQuery->count() > 0){
            $headers = array(
                 "Content-type" => "text/csv",

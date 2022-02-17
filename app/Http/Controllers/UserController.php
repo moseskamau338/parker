@@ -36,10 +36,14 @@ class UserController extends Controller
                   ]);
              //assign roles
              $user->assignRole($request->roles);
-             session()->flash('notifier',['text'=>__('User successfully added!')]);
+
+//             session()->flash('notifier',['text'=>__('User successfully added!')]);
+
              return back();
         }catch (\Throwable $e){
-            session()->flash('notifier',['text'=>__('Error: '.$e->getMessage()), 'type'=>'error']);
+
+//            session()->flash('notifier',['text'=>__('Error: '.$e->getMessage()), 'type'=>'error']);
+
              return redirect('/users');
         }
     }
@@ -51,7 +55,8 @@ class UserController extends Controller
 
     public function updateRoles(Request $request)
     {
-        session()->flash('notifier',['text'=>__('Feature coming soon!'), 'type'=>'error']);
+//        session()->flash('notifier',['text'=>__('Feature coming soon!'), 'type'=>'error']);
+
         return back();
 
     }

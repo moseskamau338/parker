@@ -33,7 +33,8 @@ class UserTable extends DataTableComponent
     public function query(): Builder
     {
         return User::query()
-            ->where('id', '!=', auth()->id());
+            ->where('id', '!=', auth()->id())
+            ->latest();
     }
 
     public function rowView(): string

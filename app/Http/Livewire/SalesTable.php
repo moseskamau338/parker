@@ -11,7 +11,7 @@ use App\Models\Sale;
 
 class SalesTable extends DataTableComponent
 {
-    public $bulkActions = [
+    public array $bulkActions = [
         'exportSelected' => 'Download CSV',
     ];
     public bool $perPageAll = true;
@@ -43,8 +43,9 @@ class SalesTable extends DataTableComponent
     {
         return 'livewire-tables.rows.sales_table';
     }
-      public function exportSelected()
+    public function exportSelected()
     {
+        dd($this->selectedRowsQuery->count());
         if ($this->selectedRowsQuery->count() > 0){
            $headers = array(
                 "Content-type" => "text/csv",

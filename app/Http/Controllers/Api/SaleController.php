@@ -23,18 +23,10 @@ class SaleController extends Controller
     public function index()
     {
 
-        $data = auth()->guard('sanctum')->user()->zone->sales
-            ->sort(function($a, $b)  {
-                if ($a == $b) { return 0;}
-                return ($a > $b) ? -1 : 1;
-            });
-        foreach($data as $sale){
-            $sale['customer'] = $sale->customer;
-            $sale['rate'] = $sale->rate;
-            $sale['gateway'] = $sale->gateway;
-            $sale['zone'] = $sale->zone;
-            $sale['user'] = $sale->user;
-        }
+        $data = Sale::with(['customer','rate','gateway','zone','user'])
+            ->where('zone_id',auth()->guard('sanctum')->user()->zone->id)
+            ->latest()->get();
+
         return new SaleResource($data);
     }
     public function show(Sale $sale)
@@ -43,6 +35,19 @@ class SaleController extends Controller
             ->where('id', $sale->id)->first();
         $sale['current_rate'] =  $sale->status === 'PAID' ? null : $sale->getParkingFee(Carbon::now('Africa/Nairobi'));
         return new SaleResource($sale);
+
+    }
+     public function cashierSales(Request $request): SaleResource
+     {
+        $data = Sale::query()
+            ->with(['customer','rate','gateway','zone','user'])
+            ->where('user_id',auth()->guard('sanctum')->id())
+            ->when($request->days, function($query, $days){
+                    $query->where('created_at','>',Carbon::today()->subDays($days) )->where('created_at','<',Carbon::today());
+                })
+            ->latest()->get();
+
+        return new SaleResource($data);
 
     }
 

@@ -12,7 +12,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class TrafficReportTable extends DataTableComponent
 {
-    public $bulkActions = [
+    public array $bulkActions = [
         'exportSelected' => 'Download CSV',
     ];
     public bool $perPageAll = true;

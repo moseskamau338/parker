@@ -27,6 +27,7 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     //zones
     Route::resource('zones', ZoneController::class );
     //sales:
+    Route::get('sales/cashier', [SaleController::class, 'cashierSales']);
     Route::resource('sales', SaleController::class);
     Route::post('sales/{sale}/close', [SaleController::class, 'closeSale']);
     //sales handover

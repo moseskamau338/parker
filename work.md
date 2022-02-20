@@ -1,16 +1,5 @@
-## Issues:
-Lost sale flow [trans ref]
-
-
-
-
 # Tasks
-- ~~Add 'SYSTEM AUTO' gateway~~
-- ~~display sales with descending order~~
-- ~~Implement new rate function~~
-~~- Add account login reset function on site~~
-- Check on autocomplete on midnight
-
+- report fetch by date
 
 # Algorithms
 <!-- Adding permisions -->

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Response;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class BankingReportTable extends DataTableComponent
 {
@@ -15,6 +16,21 @@ class BankingReportTable extends DataTableComponent
         'exportSelected' => 'Download CSV',
     ];
     public bool $perPageAll = true;
+    public function filters(): array
+    {
+        return [
+             'from_date' => Filter::make('From Date')
+                ->date([
+                    //'min' => now()->subYear()->format('Y-m-d'), // Optional
+                    'max' => now()->format('Y-m-d') // Optional
+                ]),
+            'to_date' => Filter::make('To Date')
+                ->date([
+                    'max' => now()->format('Y-m-d') // Optional
+                ]),
+
+        ];
+    }
     public function columns(): array
     {
         return [
@@ -28,7 +44,11 @@ class BankingReportTable extends DataTableComponent
 
     public function query(): Builder
     {
-        return Receipt::query();
+        return Receipt::query()
+             ->when($this->getFilter('from_date'), function($query, $from){
+                    $query->where('created_at','>',$from )
+                        ->when($this->getFilter('to_date'), fn ($query, $to) => $query->where('created_at','<',$to));
+                });
     }
     public function exportSelected()
     {

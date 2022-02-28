@@ -1,5 +1,8 @@
 # Tasks
 - report fetch by date
+~~- Sales filters: [gateway, status]~~
+- reflect numbers
+- ~~Search by date~~
 
 # Algorithms
 <!-- Adding permisions -->

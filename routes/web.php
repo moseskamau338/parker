@@ -31,6 +31,7 @@ Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|par
     });
 
     Route::controller(SaleController::class)->group(function(){
+//        Route::get('/sales/component',\App\Http\Livewire\SalesTable::class);
         Route::get('/sales','index')->name('sales');
         //handovers
         Route::get('sales/handovers',  'handovers')->name('sales.handovers');

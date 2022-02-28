@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Gateway;
 use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +13,8 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class TrafficReportTable extends DataTableComponent
 {
+    public bool $get_traffic_stats = true;
+
     public array $bulkActions = [
         'exportSelected' => 'Download CSV',
     ];
@@ -28,6 +31,8 @@ class TrafficReportTable extends DataTableComponent
                 ->date([
                     'max' => now()->format('Y-m-d') // Optional
                 ]),
+            'gateway'=> Filter::make('Payment Method')
+                ->select(Gateway::options()),
 
         ];
     }
@@ -50,6 +55,9 @@ class TrafficReportTable extends DataTableComponent
                 ->when($this->getFilter('from_date'), function($query, $from){
                     $query->where('created_at','>',$from )
                         ->when($this->getFilter('to_date'), fn ($query, $to) => $query->where('created_at','<',$to));
+                })
+                ->when($this->getFilter('gateway'), function($query, $method){
+                    $query->where('gateway_id','=',$method);
                 });
 
     }

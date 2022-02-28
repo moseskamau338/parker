@@ -14,7 +14,7 @@
     >
 
         @if($get_sales_stats ?? null)
-            @include('layouts.includes.sales_stats', ['rows' => $this->rows])
+            @include('layouts.includes.sales_stats', ['rows' => $this->all_records])
         @endif
 
         @if($get_traffic_stats ?? null)

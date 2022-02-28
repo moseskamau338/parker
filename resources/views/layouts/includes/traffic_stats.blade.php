@@ -1,12 +1,12 @@
  @php
     $data = (object)[
-        'vehicle_count'=>$rows->count(),
+        'vehicle_count'=>$rows->total(),
         'avg_time'=>0,
     ];
     foreach($rows as $record){
        $data-> avg_time += \Carbon\Carbon::parse($record->created_at)->diffInMinutes(\Carbon\Carbon::parse($record->leave_time));
     }
-    $data->avg_time /= $data->vehicle_count
+    $data->avg_time /= $data->vehicle_count || 1
 @endphp
 
 <div class="mb-4">

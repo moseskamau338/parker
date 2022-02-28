@@ -14,7 +14,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class SalesTable extends DataTableComponent
 {
     public bool $get_sales_stats = true;
-    private Builder $records;
+    public array $all_records = [];
 
     public array $bulkActions = [
         'exportSelected' => 'Download CSV',
@@ -67,7 +67,7 @@ class SalesTable extends DataTableComponent
 
     public function query(): Builder
     {
-        $this->records = Sale::query()
+        $records = Sale::query()
             ->when($this->getFilter('from_date'), function($query, $from){
                     $query->where('created_at','>',$from )
                         ->when($this->getFilter('to_date'), fn ($query, $to) => $query->where('created_at','<',$to));
@@ -79,8 +79,8 @@ class SalesTable extends DataTableComponent
                 $query->where('status','=',$status);
             })
             ->latest();
-
-        return $this->records;
+        $this->all_records = $records->get()->toArray();
+        return $records;
     }
 
     public function rowView(): string

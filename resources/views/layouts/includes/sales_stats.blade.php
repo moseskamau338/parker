@@ -15,25 +15,37 @@
     ];
 
     foreach (['PAID','LOSS','PENDING'] as $status) {
-        $q = $rows->where('status', $status);
+        $q = array_filter($rows, function($v, $k) use ($status) {
+            return $v['status'] == $status;
+        }, ARRAY_FILTER_USE_BOTH);
 
-        if ($q->count() > 0 && $status === 'PAID'){
-            $data->paid->count = $q->count();
-            $data->paid->sum = $q->sum('totals');
+        if (count($q) > 0 && $status === 'PAID'){
+            $data->paid->count = count($q);
+            $total_sum = 0;
+            foreach ($q as $paid){
+                $total_sum += $paid['totals'];
+            }
+            $data->paid->sum = $total_sum;
         }
 
-        if ($q->count() > 0 && $status === 'PENDING'){
-            $data->pending->count = $q->count();
+        if (count($q) > 0 && $status === 'PENDING'){
+            $data->pending->count = count($q);
             $total_sum = 0;
-            foreach ($q->get() as $pending){
+            foreach ($q as $pending){
+                $pending = new \App\Models\Sale($pending);
                 $total_sum += $pending->getParkingFee(\Carbon\Carbon::now('Africa/Nairobi'))->fee;
             }
+
             $data->pending->sum = $total_sum;
         }
 
-        if ($q->count() > 0 && $status === 'LOSS'){
-            $data->lost->count = $q->count();
-            $data->lost->sum = $q->sum('totals');
+        if (count($q) > 0 && $status === 'LOSS'){
+            $data->lost->count = count($q);
+            $total_sum = 0;
+            foreach ($q as $loss){
+                $total_sum += $loss['totals'];
+            }
+            $data->lost->sum = $total_sum;
         }
     }
 @endphp

@@ -18,18 +18,19 @@ class SaleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return SaleResource
      */
-    public function index()
+    public function index(): SaleResource
     {
 
         $data = Sale::with(['customer','rate','gateway','zone','user'])
             ->where('zone_id',auth()->guard('sanctum')->user()->zone->id)
+            ->whereDate('created_at', Carbon::today())
             ->latest()->get();
 
         return new SaleResource($data);
     }
-    public function show(Sale $sale)
+    public function show(Sale $sale):SaleResource
     {
         $sale = $sale->with('customer','rate', 'gateway', 'zone', 'user')
             ->where('id', $sale->id)->first();

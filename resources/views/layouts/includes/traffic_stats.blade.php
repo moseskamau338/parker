@@ -3,11 +3,9 @@
         'vehicle_count'=>$rows->total(),
         'avg_time'=>0,
     ];
-    foreach($rows as $record){
-       $data-> avg_time += \Carbon\Carbon::parse($record->created_at)->diffInMinutes(\Carbon\Carbon::parse($record->leave_time));
-    }
-    $data->avg_time /= $data->vehicle_count || 1
+    $data->avg_time = $average
 @endphp
+{{--    $data->avg_time = array_sum($records) /= $data->vehicle_count || 1--}}
 
 <div class="mb-4">
       <dl class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-3">

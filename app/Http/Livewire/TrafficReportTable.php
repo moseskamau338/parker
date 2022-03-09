@@ -19,6 +19,9 @@ class TrafficReportTable extends DataTableComponent
         'exportSelected' => 'Download CSV',
     ];
     public bool $perPageAll = true;
+
+    public int $average = 0;
+
     public function filters(): array
     {
         return [
@@ -51,7 +54,8 @@ class TrafficReportTable extends DataTableComponent
 
     public function query(): Builder
     {
-        return Sale::query()
+        $totals = 0;
+        $list = Sale::query()
                 ->when($this->getFilter('from_date'), function($query, $from){
                     $query->where('created_at','>',$from )
                         ->when($this->getFilter('to_date'), fn ($query, $to) => $query->where('created_at','<',$to));
@@ -59,6 +63,12 @@ class TrafficReportTable extends DataTableComponent
                 ->when($this->getFilter('gateway'), function($query, $method){
                     $query->where('gateway_id','=',$method);
                 });
+        foreach($list->get() as $record){
+            $duration = Carbon::parse($record->created_at)->diffInMinutes(Carbon::parse($record->leave_time));
+            $totals += $duration;
+        }
+        $this->average = $list->count() > 0 ? $totals/$list->count() : $totals;
+        return $list;
 
     }
     public function rowView(): string

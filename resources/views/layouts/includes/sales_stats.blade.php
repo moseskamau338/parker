@@ -76,7 +76,7 @@
           </dd>
         </div>
 
-        <div class="px-4 py-2 bg-white shadow rounded-lg overflow-hidden sm:p-6 h-[max-content]">
+        {{-- <div class="px-4 py-2 bg-white shadow rounded-lg overflow-hidden sm:p-6 h-[max-content]">
           <dt class="text-sm font-medium text-gray-500 truncate">
             Total Lost Sales
           </dt>
@@ -86,6 +86,6 @@
             <dd class="mt-1 text-sm font-semibold text-gray-500">
             Total of: {{$data->lost->count}} records
           </dd>
-        </div>
+        </div> --}}
       </dl>
     </div>

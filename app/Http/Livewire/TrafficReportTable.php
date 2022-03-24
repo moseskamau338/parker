@@ -46,7 +46,7 @@ class TrafficReportTable extends DataTableComponent
             Column::make('Date','created_at')->searchable()->sortable(),
             Column::make('Time in'),
             Column::make('Time Out'),
-            Column::make('Duration (Mins)'),
+            Column::make('Duration'),
             Column::make('Site', 'zone')->searchable()->sortable(),
             Column::make('Payment Method', 'gateway')->searchable()->sortable(),
         ];

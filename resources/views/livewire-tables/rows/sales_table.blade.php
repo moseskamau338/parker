@@ -32,13 +32,10 @@
     </span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{
-    \Carbon\Carbon::parse($row->created_at)->diffInMinutes(\Carbon\Carbon::parse($row->leave_time))
-
-}}
+{{ $row->duration() }}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-<span class="font-bold {{$row->gateway?->name === 'SYSTEM LOSS'?'text-red-600' : 'text-green-600'}}">{{$row->gateway->name ??
+<span class="font-bold {{$row->gateway?->name === 'UNEXITED'?'text-red-600' : 'text-green-600'}}">{{$row->gateway->name ??
 '----'}}</span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>

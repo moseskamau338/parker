@@ -57,7 +57,7 @@ class SalesTable extends DataTableComponent
 //            Column::make('Shift', 'shift'),
             Column::make('Rate', 'rate.amount')->searchable()->sortable(),
             Column::make('Status')->searchable()->sortable(),
-            Column::make('Duration (Mins)'),
+            Column::make('Duration'),
             Column::make('Payment Method', 'gateway.name')->searchable()->sortable(),
             Column::make('Amount', 'totals')->searchable()->sortable(),
 //            Column::make('Transaction Ref.'),

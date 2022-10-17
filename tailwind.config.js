@@ -2,6 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
     mode: 'jit',
+    darkMode: 'class',
     content: [
         './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',

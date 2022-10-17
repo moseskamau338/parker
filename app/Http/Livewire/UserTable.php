@@ -11,7 +11,7 @@ use App\Models\User;
 
 class UserTable extends DataTableComponent
 {
-      public $bulkActions = [
+      public array $bulkActions = [
             'exportSelected' => 'Download CSV',
         ];
       public bool $perPageAll = true;

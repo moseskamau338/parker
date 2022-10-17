@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Sale extends Model
@@ -59,12 +60,16 @@ class Sale extends Model
     public function duration()
     {
         //calculates the time between entry and leave
-        //if no leave time, use now
-        if (!$this->leave_time){
-            return (Carbon::parse($this->created_at)->diffInSeconds(Carbon::now('Africa/Nairobi'), false));
-        }else{
-            return Carbon::parse($this->leave_time)->diffInSeconds(Carbon::parse($this->created_at));
-        }
+        // make readable:
+        $minutes = Carbon::parse($this->created_at)->diffInMinutes(Carbon::parse($this->leave_time));
+    
+        $d = floor ($minutes / 1440);
+        $h = floor (($minutes - $d * 1440) / 60);
+        $m = $minutes - ($d * 1440) - ($h * 60);
+
+        //$res="{$d}days {$h}hours {$m}min";
+        $res="{$h}hours {$m}min";
+        return $res;
 
     }
     //helpers
@@ -113,8 +118,8 @@ class Sale extends Model
 
     public function markLost()
     {
-        $totals = $this->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
-        $this->totals = $totals;
+        // $totals = $this->getParkingFee(Carbon::now('Africa/Nairobi'))->fee;
+        $this->totals = 0;
         $this->status = 'LOSS';
         $this->leave_time = Carbon::now('Africa/Nairobi');
         $this->payed_at = Carbon::now('Africa/Nairobi');

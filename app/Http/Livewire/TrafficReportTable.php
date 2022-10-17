@@ -2,19 +2,43 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Gateway;
 use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Response;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class TrafficReportTable extends DataTableComponent
 {
-    public $bulkActions = [
+    public bool $get_traffic_stats = true;
+
+    public array $bulkActions = [
         'exportSelected' => 'Download CSV',
     ];
     public bool $perPageAll = true;
+
+    public int $average = 0;
+
+    public function filters(): array
+    {
+        return [
+             'from_date' => Filter::make('From Date')
+                ->date([
+                    //'min' => now()->subYear()->format('Y-m-d'), // Optional
+                    'max' => now()->format('Y-m-d') // Optional
+                ]),
+            'to_date' => Filter::make('To Date')
+                ->date([
+                    'max' => now()->format('Y-m-d') // Optional
+                ]),
+            'gateway'=> Filter::make('Payment Method')
+                ->select(Gateway::options()),
+
+        ];
+    }
     public function columns(): array
     {
         return [
@@ -22,7 +46,7 @@ class TrafficReportTable extends DataTableComponent
             Column::make('Date','created_at')->searchable()->sortable(),
             Column::make('Time in'),
             Column::make('Time Out'),
-            Column::make('Duration (Mins)'),
+            Column::make('Duration'),
             Column::make('Site', 'zone')->searchable()->sortable(),
             Column::make('Payment Method', 'gateway')->searchable()->sortable(),
         ];
@@ -30,7 +54,22 @@ class TrafficReportTable extends DataTableComponent
 
     public function query(): Builder
     {
-        return Sale::query();
+        $totals = 0;
+        $list = Sale::query()
+                ->when($this->getFilter('from_date'), function($query, $from){
+                    $query->where('created_at','>',$from )
+                        ->when($this->getFilter('to_date'), fn ($query, $to) => $query->where('created_at','<',$to));
+                })
+                ->when($this->getFilter('gateway'), function($query, $method){
+                    $query->where('gateway_id','=',$method);
+                });
+        foreach($list->get() as $record){
+            $duration = Carbon::parse($record->created_at)->diffInMinutes(Carbon::parse($record->leave_time));
+            $totals += $duration;
+        }
+        $this->average = $list->count() > 0 ? $totals/$list->count() : $totals;
+        return $list;
+
     }
     public function rowView(): string
     {

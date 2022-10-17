@@ -7,17 +7,12 @@ use App\Models\Handover;
 use App\Models\Sale;
 use App\Models\Shift;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Collection
     {
         $this->authorize('viewAny', Shift::class);
 

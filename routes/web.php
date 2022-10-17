@@ -6,6 +6,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ZoneController;
 use \App\Http\Controllers\ShiftController;
 use \App\Http\Controllers\ReceiptController;
+use \App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,33 +25,46 @@ Route::get('/', function () {
 
 
 Route::group(['middleware'=>['auth:sanctum', 'verified', 'role:admin|manager|partner']], function(){
-    Route::get('/dashboard', [ReportController::class, 'dashboard'])->name('dashboard');
-    Route::get('/sales',[SaleController::class,'index'])->name('sales');
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/reports', 'index')->name('reports');
+    });
 
-    Route::get('/zones',[ZoneController::class,'index'])->name('zones');
-    Route::get('/zones/{zone}',[ZoneController::class,'show'])->name('zones.web.show');
-    Route::post('/create/zone',[ZoneController::class,'store'])->name('zones.web.store');
+    Route::controller(SaleController::class)->group(function(){
+//        Route::get('/sales/component',\App\Http\Livewire\SalesTable::class);
+        Route::get('/sales','index')->name('sales');
+        //handovers
+        Route::get('sales/handovers',  'handovers')->name('sales.handovers');
+    });
 
-    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
-    Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
-    Route::post('/users/create', [\App\Http\Controllers\UserController::class, 'store'])->name('create.user');
+     Route::controller(ZoneController::class)->group(function(){
+        Route::get('/zones','index')->name('zones');
+        Route::get('/zones/{zone}','show')->name('zones.web.show');
+        Route::post('/create/zone','store')->name('zones.web.store');
+     });
 
-    Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('users.logout');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')->name('users');
+        Route::get('/users/create', 'create')->name('users.create');
+        Route::post('/users/create', 'store')->name('create.user');
 
-    //Manage roles
-    Route::get('/users/roles', [\App\Http\Controllers\UserController::class, 'roles'])->name('roles');
-    Route::post('/update/roles', [\App\Http\Controllers\UserController::class, 'updateRoles'])->name('update.roles');
+        Route::delete('/users/logout', 'logout')->name('users.logout');
 
-    //handovers
-    Route::get('sales/handovers', [SaleController::class, 'handovers'])->name('sales.handovers');
-    Route::get('shifts/handovers', [ShiftController::class, 'handovers'])->name('shifts.handovers');
+        //Manage roles
+        Route::get('/users/roles', 'roles')->name('roles');
+        Route::post('/update/roles', 'updateRoles')->name('update.roles');
+    });
 
     //shifts
-    Route::get('shifts', [ShiftController::class, 'shifts'])->name('shifts.view');
-
+    Route::controller(ShiftController::class)->group(function(){
+        Route::get('shifts', 'shifts')->name('shifts.view');
+        Route::get('shifts/handovers', 'handovers')->name('shifts.handovers');
+    });
 
     //reports
-    Route::get('manage/receipts', [ReceiptController::class, 'index'])->name('receipts');
-    Route::post('manage/receipts', [ReceiptController::class, 'store'])->name('receipts.store');
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+    Route::controller(ReceiptController::class)->group(function(){
+        Route::get('manage/receipts', 'index')->name('receipts');
+        Route::post('manage/receipts', 'store')->name('receipts.store');
+    });
+
 });

@@ -17,28 +17,31 @@
 {{$row->rate->amount}}/{{$row->rate->rate}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{$row->status === 'green' ? 'red':
-    'PENDING'}}-100 text-{{$row->status === 'green' ? 'red':
-    'PENDING'}}-800">
-      {{$row->status === 'PAID' ? 'PAID': 'PENDING'}}
+    @php
+    $color = '';
+        if ($row->status === 'PAID'){
+            $color = 'bg-green-100 text-green-800';
+        }else if($row->status === 'PENDING'){
+            $color = 'bg-yellow-100 text-yellow-800';
+        }else if($row->status === 'LOSS'){
+            $color = 'bg-red-100 text-red-800';
+        }
+    @endphp
+    <span class="inline-flex items-center px-2.5 py-0.5 font-bold rounded-full text-xs font-medium {{$color}}">
+      {{$row->status}}
     </span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{
-    \Carbon\Carbon::parse($row->created_at)->diffInMinutes(\Carbon\Carbon::parse($row->leave_time))
-
-}}
+{{ $row->duration() }}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-{{$row->gateway->name?? '----'}}
+<span class="font-bold {{$row->gateway?->name === 'UNEXITED'?'text-red-600' : 'text-green-600'}}">{{$row->gateway->name ??
+'----'}}</span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
     KES {{floatval($row->totals)}}
 </x-livewire-tables::table.cell>
+
 <x-livewire-tables::table.cell>
-------
-</x-livewire-tables::table.cell>
-<x-livewire-tables::table.cell>
-    {{$row->created_at}}
+    <span class="px-2">{{$row->created_at}}</span>
 </x-livewire-tables::table.cell>

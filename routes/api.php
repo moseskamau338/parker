@@ -27,6 +27,7 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     //zones
     Route::resource('zones', ZoneController::class );
     //sales:
+    Route::get('sales/cashier', [SaleController::class, 'cashierSales']);
     Route::resource('sales', SaleController::class);
     Route::post('sales/{sale}/close', [SaleController::class, 'closeSale']);
     //sales handover
@@ -34,8 +35,8 @@ Route::group(['middleware'=>"auth:sanctum"], function(){
     Route::get('sales/view/handovers', [SaleController::class, 'getHandovers']);
 
     //shifts
-    // Route::post('shifts', [ShiftController::class,'store']);
-    Route::resource('shifts', ShiftController::class);
+    Route::post('shifts', [ShiftController::class,'store']);
+    Route::get('shifts', [ShiftController::class,'index']);
     Route::post('shifts/close/', [ShiftController::class, 'closeShift']);
 
     //logout

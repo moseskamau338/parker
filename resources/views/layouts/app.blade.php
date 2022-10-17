@@ -141,7 +141,7 @@
             </div>
             <div class="mt-8 md:mt-0 md:order-1">
             <p class="text-center text-base text-gray-400">
-                &copy; 2021 Parking Manage System, All rights reserved.
+                &copy; {{\Carbon\Carbon::now()->year}} Parking Manage System, All rights reserved.
             </p>
             </div>
         </div>

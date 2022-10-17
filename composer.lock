@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "830cf20bf04385918d07db176d2b3456",
+    "content-hash": "d589551aaa5d5f2596c8e4ebb2e1af8d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4519,16 +4519,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "5.5.0",
+            "version": "5.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "6a3ed627cee28a552b5176c172ae0abc5eb30925"
+                "reference": "f2303a70be60919811ca8afc313e8244fda00974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6a3ed627cee28a552b5176c172ae0abc5eb30925",
-                "reference": "6a3ed627cee28a552b5176c172ae0abc5eb30925",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/f2303a70be60919811ca8afc313e8244fda00974",
+                "reference": "f2303a70be60919811ca8afc313e8244fda00974",
                 "shasum": ""
             },
             "require": {
@@ -4589,7 +4589,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.5.0"
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.5"
             },
             "funding": [
                 {
@@ -4597,7 +4597,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-11T15:06:21+00:00"
+            "time": "2022-06-29T23:11:42+00:00"
         },
         {
             "name": "symfony/console",
@@ -6765,16 +6765,16 @@
         },
         {
             "name": "tailflow/laravel-orion",
-            "version": "2.10.0",
+            "version": "2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tailflow/laravel-orion.git",
-                "reference": "375c37ff38bc8c0e29a7f9f670db316bd1d3579f"
+                "reference": "a49ff937553c5fb0580c00aaa2c7ba8c0800d898"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tailflow/laravel-orion/zipball/375c37ff38bc8c0e29a7f9f670db316bd1d3579f",
-                "reference": "375c37ff38bc8c0e29a7f9f670db316bd1d3579f",
+                "url": "https://api.github.com/repos/tailflow/laravel-orion/zipball/a49ff937553c5fb0580c00aaa2c7ba8c0800d898",
+                "reference": "a49ff937553c5fb0580c00aaa2c7ba8c0800d898",
                 "shasum": ""
             },
             "require": {
@@ -6787,11 +6787,11 @@
                 "illuminate/pagination": ">=5.7",
                 "illuminate/support": ">=5.7",
                 "php": ">=7.3",
-                "symfony/yaml": "^5.3"
+                "symfony/yaml": "^5.3|^6.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.7|^4.0|^5.0|^6.0",
+                "orchestra/testbench": "^3.7|^4.0|^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^6.0|^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -6832,7 +6832,7 @@
                 "issues": "https://github.com/tailflow/laravel-orion/issues",
                 "source": "https://github.com/tailflow/laravel-orion"
             },
-            "time": "2022-01-24T15:51:59+00:00"
+            "time": "2022-10-04T11:20:28+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9686,5 +9686,5 @@
         "php": "7.4|^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

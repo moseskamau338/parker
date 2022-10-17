@@ -12,4 +12,13 @@ class Gateway extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public static function options(): array
+    {
+         $methods = ['' => 'Any'];
+        foreach(Gateway::all('id', 'name')->toArray() as $key=>$value){
+           $methods[$value['id']] = $value['name'];
+        }
+        return $methods;
+    }
 }

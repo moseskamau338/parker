@@ -5,7 +5,7 @@
     #{{$row->shift_id}}
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
-    <span class="text-blue-600 font-bold">{{$row->shift->user->name}}</span>
+    <span class="text-blue-600 font-bold">{{$row->shift->user->name ?? 'N/A'}}</span>
 </x-livewire-tables::table.cell>
 <x-livewire-tables::table.cell>
     <span class="font-bold">KES {{$row->cash_at_hand}}</span>

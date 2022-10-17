@@ -15,7 +15,6 @@ class ShiftController extends Controller
     public function index(): Collection
     {
         $this->authorize('viewAny', Shift::class);
-        dd('SHow shifts');
 
         return Shift::with('user','zone','handover')->get();
     }
